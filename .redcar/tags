@@ -1,0 +1,62 @@
+1370064627
+AddStatusIdToEventUser	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530144711_add_status_id_to_event_user.rb	class AddStatusIdToEventUser 
+Application	/home/luky/Dropbox/scripts/rails/operations/config/application.rb	  class Application 
+ApplicationController	/home/luky/Dropbox/scripts/rails/operations/app/controllers/application_controller.rb	class ApplicationController 
+ApplicationHelper	/home/luky/Dropbox/scripts/rails/operations/app/helpers/application_helper.rb	module ApplicationHelper
+BrowsingTest	/home/luky/Dropbox/scripts/rails/operations/test/performance/browsing_test.rb	class BrowsingTest 
+CalendarHelper	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	module CalendarHelper
+CreateDayCollections	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531184528_create_day_collections.rb	class CreateDayCollections 
+CreateDays	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531073818_create_days.rb	class CreateDays 
+CreateEvents	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530132954_create_events.rb	class CreateEvents 
+CreateEventusers	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530133033_create_eventusers.rb	class CreateEventusers 
+CreateShifts	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531073851_create_shifts.rb	class CreateShifts 
+CreateStatuses	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530144641_create_statuses.rb	class CreateStatuses 
+CreateUsers	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530133012_create_users.rb	class CreateUsers 
+Day	/home/luky/Dropbox/scripts/rails/operations/app/models/day.rb	class Day 
+DayCollection	/home/luky/Dropbox/scripts/rails/operations/app/models/day_collection.rb	class DayCollection 
+DayCollectionTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/day_collection_test.rb	class DayCollectionTest 
+DayCollectionsController	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	class DayCollectionsController 
+DayCollectionsControllerTest	/home/luky/Dropbox/scripts/rails/operations/test/functional/day_collections_controller_test.rb	class DayCollectionsControllerTest 
+DayCollectionsHelper	/home/luky/Dropbox/scripts/rails/operations/app/helpers/day_collections_helper.rb	module DayCollectionsHelper
+DayCollectionsHelperTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/helpers/day_collections_helper_test.rb	class DayCollectionsHelperTest 
+DayTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/day_test.rb	class DayTest 
+Engine	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  class Engine 
+Event	/home/luky/Dropbox/scripts/rails/operations/app/models/event.rb	class Event 
+EventTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/event_test.rb	class EventTest 
+Eventuser	/home/luky/Dropbox/scripts/rails/operations/app/models/eventuser.rb	class Eventuser 
+EventuserTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/eventuser_test.rb	class EventuserTest 
+Operations	/home/luky/Dropbox/scripts/rails/operations/config/application.rb	module Operations
+Shift	/home/luky/Dropbox/scripts/rails/operations/app/models/shift.rb	class Shift 
+ShiftTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/shift_test.rb	class ShiftTest 
+Status	/home/luky/Dropbox/scripts/rails/operations/app/models/status.rb	class Status 
+StatusTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/status_test.rb	class StatusTest 
+TestCase	/home/luky/Dropbox/scripts/rails/operations/test/test_helper.rb	class ActiveSupport::TestCase
+User	/home/luky/Dropbox/scripts/rails/operations/app/models/user.rb	class User 
+UserTest	/home/luky/Dropbox/scripts/rails/operations/test/unit/user_test.rb	class UserTest 
+VERSION	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  VERSION =
+beginning_of_week	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def beginning_of_week(date, start = 1)
+calendar	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def calendar( options = {}, &block)
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530133033_create_eventusers.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531073818_create_days.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531073851_create_shifts.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530144711_add_status_id_to_event_user.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530144641_create_statuses.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530132954_create_events.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130530133012_create_users.rb	  def change
+change	/home/luky/Dropbox/scripts/rails/operations/db/migrate/20130531184528_create_day_collections.rb	  def change
+create	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def create
+day_events	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def day_events(date, events, watch)
+days_between	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def days_between(first, second)
+destroy	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def destroy
+edit	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def edit
+first_day_of_week	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def first_day_of_week(day)
+generate_cell	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def generate_cell(cell_text, cell_attrs)
+generate_other_month_cell	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def generate_other_month_cell(date, options)
+index	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def index
+last_day_of_week	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def last_day_of_week(day)
+new	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def new
+show	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def show
+test_homepage	/home/luky/Dropbox/scripts/rails/operations/test/performance/browsing_test.rb	  def test_homepage
+th_id	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def th_id(day, calendar_id)
+update	/home/luky/Dropbox/scripts/rails/operations/app/controllers/day_collections_controller.rb	  def update
+weekend?	/home/luky/Dropbox/scripts/rails/operations/app/helpers/calendar_helper.rb	  def weekend?(date)

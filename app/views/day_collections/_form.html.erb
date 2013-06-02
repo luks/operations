@@ -1,0 +1,37 @@
+<%= form_for(@day_collection) do |f| %>
+  <% if @day_collection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@day_collection.errors.count, "error") %> prohibited this day_collection from being saved:</h2>
+
+      <ul>
+      <% @day_collection.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @day %>
+     <%= f.hidden_field :day_id, :value => @day.id %>
+  <% else  %>
+  <div class="field">
+    <%= f.label :day_id %><br />
+    <%= f.select(:day_id, Day.all.map { |day| [ day.date, day.id] }) %>		
+  </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.select(:user_id, User.all.map { |user| [ user.name, user.id] }) %>		
+  </div>
+  <div class="field">
+    <%= f.label :status_id %><br />
+    <%= f.select(:status_id, Status.all.map { |status| [ status.title, status.id] }) %>
+  </div>
+  <div class="field">
+    <%= f.label :shift_id %><br />
+    <%= f.select(:shift_id, Shift.all.map { |shift| [ shift.name, shift.id] }) %>		
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

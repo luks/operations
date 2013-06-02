@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  DayCollection: MyString
+  Shift: MyString
+
+two:
+  DayCollection: MyString
+  Shift: MyString

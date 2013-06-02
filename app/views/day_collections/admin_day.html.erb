@@ -1,0 +1,16 @@
+
+<%= form_for(@day_collection) do |f| %>
+<%= @day.date.strftime("%d/%m/%Y") %>
+<% @users.each do |user| %>
+  
+
+  <%= render 'admin_form', :f => f  %>
+
+<% end  %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
