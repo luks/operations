@@ -14,12 +14,10 @@
 ActiveRecord::Schema.define(:version => 20130531184528) do
 
   create_table "day_collections", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "status_id"
-    t.integer  "shift_id"
-    t.integer  "day_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "user_id"
+    t.integer "status_id"
+    t.integer "shift_id"
+    t.integer "day_id"
   end
 
   create_table "days", :force => true do |t|
@@ -27,6 +25,8 @@ ActiveRecord::Schema.define(:version => 20130531184528) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "days", ["id"], :name => "index_days_on_id"
 
   create_table "events", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20130531184528) do
 
   create_table "shifts", :force => true do |t|
     t.string   "name"
+    t.string   "shift"
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at", :null => false

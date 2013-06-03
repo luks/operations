@@ -1,6 +1,8 @@
 Operations::Application.routes.draw do
 
-  resources :day_collections
+  #resources :day_collections
+  resources :days
+
   match 'day_collections/:year/:month/:day/:shift' => 'day_collections#day',
     :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
     :as => 'day_collection_day'
@@ -9,7 +11,23 @@ Operations::Application.routes.draw do
     :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
     :as => 'day_collection_admin_day'
 
+  match 'day_collections/destroy/:year/:month/:day/:id' => 'day_collections#destroy',
+    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :id => /\d+/ },
+    :as => 'day_collection_destroy'
 
+
+  match 'day_collections/admin/multiple' => 'day_collections#multiple',
+    :as => 'day_collection_multiple', :via => :post
+
+  match 'day_collections/set_overview/:overview' => 'day_collections#set_overview',
+    :constraints => { :overview => /month|week/ },
+    :as => 'day_collection_set_overview'
+
+  match 'day_collections' => 'day_collections#index',
+    :as => 'day_collections'
+
+#  match 'day_collections/quick' => 'day_collections#quick_reservations',
+#    :as => 'day_collection_quick', :via => :post
   
   # The priority is based upo order of creation:
   # first created -> highest priority.

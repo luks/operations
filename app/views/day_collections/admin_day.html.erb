@@ -1,16 +1,39 @@
 
-<%= form_for(@day_collection) do |f| %>
-<%= @day.date.strftime("%d/%m/%Y") %>
-<% @users.each do |user| %>
-  
 
-  <%= render 'admin_form', :f => f  %>
+<table class="altrowstable">
+  <tr>
+    <th colspan="7">
+      <strong><%= @day.date.strftime("%d/%m/%Y") %></strong>
+    </th>
+  </tr>
+<%= form_for(@day.day_collections.new, :url => day_collection_multiple_path) do |f| %>
 
-<% end  %>
+    <%= hidden_field_tag "day_id", @day.id %>
+    <% for collection in @collections %>
+      <tr>
+       <%= fields_for "day_collections[]", collection do |fields|  %>
+          <%= render "admin_fields", :f => fields, :collection => collection, :checked => true  %>
+      <% end %>
+      </tr>
+      
+    <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <% for collection in @collections_new %>
+      <tr>
+       <%= fields_for "day_collections_new[]", collection do |fields| %>
+          <%= render "admin_fields", :f => fields, :collection => collection,:checked =>false  %>
+      <% end %>
+      </tr>
+
+    <% end %>
+      <tr >
+        <td colspan="7">
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        </td>
+      </tr>
+ 
 <% end %>
-
+</table>
 

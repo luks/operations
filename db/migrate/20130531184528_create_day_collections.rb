@@ -5,8 +5,6 @@ class CreateDayCollections < ActiveRecord::Migration
       t.integer :status_id
       t.integer :shift_id
       t.integer :day_id	
-
-      t.timestamps
     end
   end
 end

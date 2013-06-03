@@ -4,5 +4,6 @@ class CreateDays < ActiveRecord::Migration
       t.date :date
       t.timestamps
     end
+    add_index :days, :id
   end
 end

@@ -3,6 +3,5 @@ class DayCollection < ActiveRecord::Base
   belongs_to :user
   belongs_to :status
   belongs_to :shift
-	
-
+  belongs_to :day
 end

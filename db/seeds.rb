@@ -50,8 +50,9 @@
 #    Day.create(date:  Date.new( 2013, 05, 7 ))
 #    Day.create(date:  Date.new( 2013, 05, 4 ))
 #
-    Shift.create(name: "day")
-    Shift.create(name: "night")
+    Shift.create(name: "denni",shift: "day")
+    Shift.create(name: "nocni",shift: "night")
+   
 
 #    DayCollection.create(day_id:1,user_id:1,status_id:2,shift_id:1)
 #    DayCollection.create(day_id:1,user_id:2,status_id:1,shift_id:1)

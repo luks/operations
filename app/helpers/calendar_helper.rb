@@ -7,8 +7,8 @@ module CalendarHelper
       :year       => (params[:year] || Time.zone.now.year).to_i,
       :month      => (params[:month] || Time.zone.now.month).to_i,
       :day       => (params[:day] || Time.zone.now.day).to_i,
-      :prev_text  => raw("&laquo;"),
-      :next_text  => raw("&raquo;"),
+      :prev_text  => raw(" &laquo; "),
+      :next_text  => raw(" &raquo; "),
       :start_day  => :monday,
       :class      => "calendar",
       :type       => params[:type] || :month,
@@ -16,6 +16,7 @@ module CalendarHelper
     }
     options.reverse_merge! opts
     events       ||= []
+    
     selected_month = Date.new(options[:year], options[:month],options[:day])
     if(options[:type] == "week")
       draw_week(events,selected_month,options)
@@ -50,7 +51,7 @@ module CalendarHelper
       tags << content_tag(:tbody) do
         tr = []
         ['day','night'].each do |s|
-          tr << table_week(week, selected_month, today, s,events)
+          tr << table_week(week, selected_month, today, s,events,options)
         end.join.html_safe
         tr.join.html_safe
       end
@@ -80,7 +81,7 @@ module CalendarHelper
         tr = []
         month_array.each do |week|
           ['day','night'].each do |s|
-            tr << table_week(week, selected_month, today, s,events)
+            tr << table_week(week, selected_month, today, s,events,options)
           end.join.html_safe
         end.join.html_safe
         tr.join.html_safe
@@ -107,7 +108,7 @@ module CalendarHelper
   end
 
   def month_header(selected_month, options)
-    content_tag :h2 do
+    content_tag :div, :class => "calendar_navigation" do
       previous_month = selected_month.advance :months => -1
       next_month = selected_month.advance :months => 1
       tags = []
@@ -115,20 +116,25 @@ module CalendarHelper
       tags << month_link(options[:prev_text], previous_month, options[:params], {:class => "previous-month"})
       tags << "#{I18n.t("date.month_names")[selected_month.month]} #{selected_month.year}"
       tags << month_link(options[:next_text], next_month, options[:params], {:class => "next-month"})
-
+      tags << " ---------------- "
+      tags << link_overview('week',selected_month,'week')
       tags.join.html_safe
     end
   end
 
   def week_header(selected_week, options)
-    content_tag :h2 do
+    content_tag :div, :class => "calendar_navigation" do
       previous_week = selected_week.beginning_of_week(options[:start_day]).advance :days => -1
       next_week = selected_week.end_of_week(options[:start_day]).advance :days => 1
       tags = []
 
       tags << week_link(options[:prev_text], previous_week, options[:params], {:class => "previous-week"})
-      tags << "#{I18n.t("date.month_names")[selected_week.month]} #{selected_week.year}"
+      tags << " #{selected_week.beginning_of_week(options[:start_day]).strftime("%d/%m")}"
+      tags << " - "
+      tags << " #{selected_week.end_of_week(options[:start_day]).strftime("%d/%m %Y")}"
       tags << week_link(options[:next_text], next_week, options[:params], {:class => "next-week"})
+      tags << " ---------------- "
+      tags << link_overview('month',selected_week,'month')
 
       tags.join.html_safe
     end
@@ -142,11 +148,12 @@ module CalendarHelper
     link_to(text, params.merge({:month => date.month, :year => date.year, :day => date.day} ), opts)
   end
 
-  def table_week(week, selected_month, today,s,events)
+  def table_week(week, selected_month, today,s,events,options)
     tr = []
     tr << content_tag(:tr, :class => s) do
       td = []
       
+
       week.each do |day|
         td_class = ["week_day"]
         td_class << "today" if today == day
@@ -155,40 +162,61 @@ module CalendarHelper
         td_class << "future" if today < day
 
         td << content_tag(:td, :class => td_class.join(" ")) do
-
+          if (selected_month.month == day.month or options[:type] == 'week')
           if(day_shift(s))
-            concat content_tag(:div,day.strftime("%d/%m/%Y"), :class => 'date_number')
+            concat content_tag(:div,day.strftime("%d/%m")+ " denni", :class => 'date_number')
           else
-            concat content_tag(:div,"nocni (20:00-08:00)", :class => 'date_number')
+            concat content_tag(:div, " nocni", :class => 'date_number')
           end
 
-        
+          html = []
+          created_day = nil
           day_objects(day, events).each do |day_object|
-            html = []
-            day_object.day_collections.each do |shift|
-              if(s == shift.shift.name)
-                html << "<div class='operator #{shift.status.name}'>"
-                html << content_tag(:div, shift.user.name,  :class => 'user')
+            created_day = true
+            day_object.day_collections.each do |col|
+              if(s == col.shift.shift)
+                html << "<div class='operator #{col.status.name}'>"
+                html << content_tag(:div, col.user.name,  :class => 'user')
+                html << link_destroy(col,day)
                 html << "</div>"
               end
             end
-            concat html.join.html_safe
+            html << link_reservate(day, s) unless day_object.has_user?(1)
           end.join.html_safe
-         
+
+          html << link_reservate(day, s) unless created_day
+
+          if !day_shift(s)
+            
+            html << "<div class='operator available admin'>"
+            html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day, s.to_s ))
+            html << "</div>"
           
-          html = []
-          html << "<div class='operator available'>"
-          html << link_to( "Volno", day_collection_day_path(day.year ,day.month, day.day, s.to_s ))
-          html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day, s.to_s ))
-          html << "</div>"
+          end
           concat html.join.html_safe
-          
-       
+          end
         end
       end.join.html_safe
       td.join.html_safe
     end
+  end
 
+  def link_reservate(day,s)
+    tags = []
+    tags << "<div class='operator available'>"
+    tags <<  link_to( "Volno", day_collection_day_path(day.year ,day.month, day.day, s.to_s ))
+    tags << "</div>"
+    tags.join.html_safe
+  end
+
+  def link_destroy(collection, day)
+    link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+  end
+  def link_destroy(collection, day)
+    link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+  end
+  def link_overview(name, day, overview)
+    link_to("#{name}", day_collection_set_overview_path(:year => day.year , :month => day.month, :day => day.day, :overview => overview ))
   end
 end
 
