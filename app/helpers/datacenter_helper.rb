@@ -190,7 +190,7 @@ module DatacenterHelper
                   html << "</div>"
                 end
               end
-              html << link_reservate(options,day, s) unless day_object.has_user?(current_user)
+              html << link_reservate(options,day, s) unless current_user
             end.join.html_safe
             html << link_reservate(options,day, s) unless created_day
 
@@ -220,7 +220,7 @@ module DatacenterHelper
   end
 
   def link_confirm(options,collection, day)
-    if can?(:confirm, collection)
+    if can?(:day_confirm, collection)
       link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, collection.id ))
     end
   end
