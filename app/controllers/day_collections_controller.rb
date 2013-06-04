@@ -1,4 +1,7 @@
 class DayCollectionsController < ApplicationController
+
+  load_and_authorize_resource
+  
   # GET /day_collections
   # GET /day_collections.json
   def index
@@ -16,9 +19,27 @@ class DayCollectionsController < ApplicationController
   end
 
   def destroy
+
+    @day_collection = DayCollection.find(params[:id])
+    
+    day = @day_collection.day
+
+    if @day_collection.user_id == current_user.id
+        @day_collection.destroy
+    else
+      alert = "You can delete other people"
+    end
+    respond_to do |format|
+      format.html { redirect_to day_collections_url(redirect_to_date(day.date)) }
+      format.json { head :no_content }
+    end
+  end
+
+    def confirm
+
     @day_collection = DayCollection.find(params[:id])
     day = @day_collection.day
-    @day_collection.destroy
+    @day_collection.update_attribute(:status_id, 1)
 
     respond_to do |format|
       format.html { redirect_to day_collections_url(redirect_to_date(day.date)) }
@@ -35,7 +56,8 @@ class DayCollectionsController < ApplicationController
       day.save
     end
     shift_id = params[:shift] == 'day' ? 1 : 2
-    day_collection = day.day_collections.new(:user_id => 1,:status_id => 2, :shift_id => shift_id )
+
+    day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id )
     day_collection.save
     respond_to do |format|
       format.html { redirect_to day_collections_url(redirect_to_date(day.date)) }

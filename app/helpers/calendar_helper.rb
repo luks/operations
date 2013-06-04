@@ -186,20 +186,16 @@ module CalendarHelper
                   html << "<div class='operator #{col.status.name}'>"
                   html << content_tag(:div, col.user.name,  :class => 'user')
                   html << link_destroy(col,day)
+                  html << link_confirm(col,day)
                   html << "</div>"
                 end
               end
-              html << link_reservate(day, s) unless day_object.has_user?(1)
+              html << link_reservate(day, s) unless day_object.has_user?(current_user) 
             end.join.html_safe
-
             html << link_reservate(day, s) unless created_day
 
             if !day_shift(s)
-            
-              html << "<div class='operator available admin'>"
-              html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day, s.to_s ))
-              html << "</div>"
-          
+              html << link_admin_reserv(day)
             end
             concat html.join.html_safe
           end
@@ -218,13 +214,29 @@ module CalendarHelper
   end
 
   def link_destroy(collection, day)
-    link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+    if can?(:destroy, collection)
+      link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+    end
   end
-  def link_destroy(collection, day)
-    link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+
+  def link_confirm(collection, day)
+    if can?(:confirm, collection)
+      link_to( "Confirm", day_collection_confirm_path(day.year ,day.month, day.day, collection.id ))
+    end
   end
+
   def link_overview(name, day, overview)
     link_to("#{name}", day_collection_set_overview_path(:year => day.year , :month => day.month, :day => day.day, :overview => overview ))
+  end
+
+  def link_admin_reserv(day)
+    if can?(:manage, :multiple)
+      html =[]
+      html << "<div class='operator available admin'>"
+      html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day ))
+      html << "</div>"
+      html.join.html_safe
+    end
   end
 end
 

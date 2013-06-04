@@ -6,18 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-    Event.create(name: "first")
-    Event.create(name: "second")
-    Event.create(name: "third")
-    Event.create(name: "fourth")
+#    Event.create(name: "first")
+#    Event.create(name: "second")
+#    Event.create(name: "third")
+#    Event.create(name: "fourth")
 
 
-    User.create(name: "Luka")
-    User.create(name: "Martina")
-    User.create(name: "Katarina")
-    User.create(name: "Biserka")
-    User.create(name: "Marko")
-    User.create(name: "Jelena")
+#    User.create(name: "Luka")
+#    User.create(name: "Martina")
+#    User.create(name: "Katarina")
+#    User.create(name: "Biserka")
+#    User.create(name: "Marko")
+#    User.create(name: "Jelena")
 
 
     Status.create(name: "approved",title: "Schvaleno")

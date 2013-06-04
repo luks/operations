@@ -1,5 +1,9 @@
 Operations::Application.routes.draw do
 
+  devise_for :users
+  
+
+
   #resources :day_collections
   resources :days
 
@@ -7,14 +11,17 @@ Operations::Application.routes.draw do
     :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
     :as => 'day_collection_day'
 
-  match 'day_collections/admin/:year/:month/:day/:shift' => 'day_collections#admin_day',
-    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
+  match 'day_collections/admin/:year/:month/:day' => 'day_collections#admin_day',
+    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ },
     :as => 'day_collection_admin_day'
 
   match 'day_collections/destroy/:year/:month/:day/:id' => 'day_collections#destroy',
     :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :id => /\d+/ },
     :as => 'day_collection_destroy'
 
+  match 'day_collections/confirm/:year/:month/:day/:id' => 'day_collections#confirm',
+    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :id => /\d+/ },
+    :as => 'day_collection_confirm'
 
   match 'day_collections/admin/multiple' => 'day_collections#multiple',
     :as => 'day_collection_multiple', :via => :post
@@ -25,6 +32,8 @@ Operations::Application.routes.draw do
 
   match 'day_collections' => 'day_collections#index',
     :as => 'day_collections'
+
+
 
 #  match 'day_collections/quick' => 'day_collections#quick_reservations',
 #    :as => 'day_collection_quick', :via => :post

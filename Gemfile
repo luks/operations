@@ -11,6 +11,9 @@ gem 'therubyracer'
 gem 'sqlite3'
 gem "activerecord-import", ">= 0.2.0"
 
+gem 'devise'
+gem 'cancan'
+
 
 
 # Gems used only for assets and not required
