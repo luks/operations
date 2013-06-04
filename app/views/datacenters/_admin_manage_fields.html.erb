@@ -1,0 +1,35 @@
+
+
+<td>
+  <%= check_box_tag "users_id[]", collection.user.id, checked %>
+</td>
+<td >
+  <strong>
+     <%=h collection.user.name %>
+  </strong>
+
+    <%= f.hidden_field :day_id, :value => @day.id %>
+    <%= f.hidden_field :user_id, :value => collection.user.id %>
+    <% unless collection.id.nil? %>
+      <%= f.hidden_field :id, :value => collection.id %>
+    <% end %>
+</td>
+
+<td class="<%=  collection.status.name unless collection.status.nil? %>">
+  <%= f.label :status_id %>
+</td>
+<td>
+  <%= f.select(:status_id, Status.all.map { |status| [ status.title, status.id]}) %>
+</td>
+<td class="<%=  collection.shift.shift unless collection.shift.nil? %>">
+  <%= f.label :shift_id %>
+</td>
+<td>
+  <%= f.select(:shift_id, Shift.all.map { |shift| [ shift.name, shift.id] }) %>
+</td>
+
+
+
+
+
+

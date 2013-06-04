@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @datacenter.name %>
+</p>
+
+<%=  datacenter  @datacenter, {:type => "#{@view}"}  %>
+
+<%= link_to 'Edit', edit_datacenter_path(@datacenter) %> |
+<%= link_to 'Back', datacenters_path %>

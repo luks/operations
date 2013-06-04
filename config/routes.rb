@@ -1,10 +1,44 @@
 Operations::Application.routes.draw do
 
+  resources :datacenters
+
+  root :to => 'datacenters#index'
+
+
+  match 'datacenters/:id/view/:view' => 'datacenters#set_view',
+    :constraints => { :id => /\d+/,:view => /month|week/ },
+    :as => 'datacenters_view'
+
+  match 'datacenters/:id/reservate/:year/:month/:day/:shift' => 'datacenters#day_reserve',
+    :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
+    :as => 'datacenters_day_reserve'
+
+  match 'datacenters/:id/confirm/:year/:month/:day/:coll_id' => 'datacenters#day_confirm',
+    :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/,  :coll_id => /\d+/ },
+    :as => 'datacenters_day_confirm'
+
+  match 'datacenters/:id/destroy/:year/:month/:day/:coll_id' => 'datacenters#day_destroy',
+    :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/,  :coll_id => /\d+/ },
+    :as => 'datacenters_day_destroy'
+
+  match 'datacenters/:id/manage_days/:year/:month/:day' => 'datacenters#admin_manage_days',
+    :constraints => {:id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ },
+    :as => 'datacenters_admin_manage_days'
+
+  match 'datacenters/:id/admin_process' => 'datacenters#admin_process_days',
+    :as => 'datacenters_admin_process_days', :via => :post
+
+
+
+
+
+
+
+
+
+
   devise_for :users
-  
 
-
-  #resources :day_collections
   resources :days
 
   match 'day_collections/:year/:month/:day/:shift' => 'day_collections#day',

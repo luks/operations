@@ -1,7 +1,7 @@
 
-module CalendarHelper
+module DatacenterHelper
 
-  def calendar(datacenter, options={})
+  def datacenter(datacenter, options={})
 
     opts = {
       :year       => (params[:year] || Time.zone.now.year).to_i,
@@ -12,7 +12,8 @@ module CalendarHelper
       :start_day  => :monday,
       :class      => "calendar",
       :type       => params[:type] || :month,
-      :params     => {}
+      :params     => {},
+      :center_id  =>  datacenter.id
     }
     options.reverse_merge! opts
         
@@ -49,7 +50,7 @@ module CalendarHelper
 
       start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
       end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
-      days_array = Day.where( :date => start_date..end_date)
+      days_array = Day.where( :date => start_date..end_date, :center_id => options[:center_id])
 
       tags << content_tag(:tbody) do
         tr = []
@@ -80,7 +81,7 @@ module CalendarHelper
 
     start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
     end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
-    days_array = Day.where( :date => start_date..end_date)
+    days_array = Day.where( :date => start_date..end_date, :center_id => options[:center_id])
 
     tags << month_header(selected_month, options)
 
@@ -126,7 +127,7 @@ module CalendarHelper
       tags << "#{I18n.t("date.month_names")[selected_month.month]} #{selected_month.year}"
       tags << month_link(options[:next_text], next_month, options[:params], {:class => "next-month"})
       tags << " ---------------- "
-      tags << link_overview('week',selected_month,'week')
+      tags << link_overview(options,'week',selected_month,'week')
       tags.join.html_safe
     end
   end
@@ -143,7 +144,7 @@ module CalendarHelper
       tags << " #{selected_week.end_of_week(options[:start_day]).strftime("%d/%m %Y")}"
       tags << week_link(options[:next_text], next_week, options[:params], {:class => "next-week"})
       tags << " ---------------- "
-      tags << link_overview('month',selected_week,'month')
+      tags << link_overview(options,'month',selected_week,'month')
 
       tags.join.html_safe
     end
@@ -184,17 +185,17 @@ module CalendarHelper
                 if(s == col.shift.shift)
                   html << "<div class='operator #{col.status.name}'>"
                   html << content_tag(:div, col.user.name,  :class => 'user')
-                  html << link_destroy(col,day)
-                  html << link_confirm(col,day)
+                  html << link_destroy(options,col,day)
+                  html << link_confirm(options,col,day)
                   html << "</div>"
                 end
               end
-              html << link_reservate(day, s) unless day_object.has_user?(current_user) 
+              html << link_reservate(options,day, s) unless day_object.has_user?(current_user)
             end.join.html_safe
-            html << link_reservate(day, s) unless created_day
+            html << link_reservate(options,day, s) unless created_day
 
             if !day_shift(s)
-              html << link_admin_reserv(day)
+              html << link_admin_reserv(options,day)
             end
             concat html.join.html_safe
           end
@@ -204,35 +205,35 @@ module CalendarHelper
     end
   end
 
-  def link_reservate(day,s)
+  def link_reservate(options,day,s)
     tags = []
     tags << "<div class='operator available'>"
-    tags <<  link_to( "Volno", day_collection_day_path(day.year ,day.month, day.day, s.to_s ))
+    tags <<  link_to( "Volno", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
     tags << "</div>"
     tags.join.html_safe
   end
 
-  def link_destroy(collection, day)
+  def link_destroy(options,collection, day)
     if can?(:destroy, collection)
-      link_to( "Zrusit", day_collection_destroy_path(day.year ,day.month, day.day, collection.id ))
+      link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, collection.id ))
     end
   end
 
-  def link_confirm(collection, day)
+  def link_confirm(options,collection, day)
     if can?(:confirm, collection)
-      link_to( "Confirm", day_collection_confirm_path(day.year ,day.month, day.day, collection.id ))
+      link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, collection.id ))
     end
   end
 
-  def link_overview(name, day, overview)
-    link_to("#{name}", day_collection_set_overview_path(:year => day.year , :month => day.month, :day => day.day, :overview => overview ))
+  def link_overview(options,name, day, overview)
+    link_to("#{name}", datacenters_view_path(options[:center_id],:year => day.year , :month => day.month, :day => day.day, :view => overview ))
   end
 
-  def link_admin_reserv(day)
+  def link_admin_reserv(options,day)
     if can?(:manage, :multiple)
       html =[]
       html << "<div class='operator available admin'>"
-      html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day ))
+      html << link_to( "Admin", datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
       html << "</div>"
       html.join.html_safe
     end

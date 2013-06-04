@@ -1,18 +1,17 @@
 class DayCollectionsController < ApplicationController
 
   load_and_authorize_resource
-  
   # GET /day_collections
   # GET /day_collections.json
   def index
-    @overview = session[:overview]
+    @view = session[:view]
     respond_to do |format|
       format.html # index.html.erb
     end
   end
 
   def set_overview
-    session[:overview] = params[:overview] || 'week'
+    session[:view] = params[:view] || 'week'
     respond_to do |format|
       format.html { redirect_to day_collections_url(params) }
     end
@@ -34,7 +33,7 @@ class DayCollectionsController < ApplicationController
     end
   end
 
-    def confirm
+  def confirm
 
     @day_collection = DayCollection.find(params[:id])
     day = @day_collection.day
@@ -59,7 +58,7 @@ class DayCollectionsController < ApplicationController
     day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id )
     day_collection.save
     respond_to do |format|
-      format.html { redirect_to day_collections_url(redirect_to_date(day.date)) }
+      format.html { redirect_to datacenters_url(redirect_to_date(day.date)) }
     end
     
   end
