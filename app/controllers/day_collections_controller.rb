@@ -2,12 +2,9 @@ class DayCollectionsController < ApplicationController
   # GET /day_collections
   # GET /day_collections.json
   def index
-
-    @day_collections = DayCollection.all
     @overview = session[:overview]
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @day_collections }
     end
   end
 

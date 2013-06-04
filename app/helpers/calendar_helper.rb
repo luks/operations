@@ -1,7 +1,7 @@
 
 module CalendarHelper
 
-  def calendar(events,options={})
+  def calendar(object, options={})
 
     opts = {
       :year       => (params[:year] || Time.zone.now.year).to_i,
@@ -15,13 +15,13 @@ module CalendarHelper
       :params     => {}
     }
     options.reverse_merge! opts
-    events       ||= []
+    
     
     selected_month = Date.new(options[:year], options[:month],options[:day])
     if(options[:type] == "week")
-      draw_week(events,selected_month,options)
+      draw_week(selected_month,options)
     else
-      draw_month(events,selected_month, options)
+      draw_month(selected_month, options)
     end
   end
 
@@ -40,7 +40,7 @@ module CalendarHelper
     (start_date..end_date).to_a
   end
 
-  def draw_week(events, selected_month, options)
+  def draw_week(selected_month, options)
     week = build_week_range(selected_month, options)
     today = Date.today
     tags = []
@@ -48,10 +48,14 @@ module CalendarHelper
     content_tag(:table, :class => options[:class]) do
       tags << table_header(options)
 
+      start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
+      end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
+      days_array = Day.where( :date => start_date..end_date)
+
       tags << content_tag(:tbody) do
         tr = []
         ['day','night'].each do |s|
-          tr << table_week(week, selected_month, today, s,events,options)
+          tr << table_week(week, selected_month, today, s, days_array, options)
         end.join.html_safe
         tr.join.html_safe
       end
@@ -59,8 +63,8 @@ module CalendarHelper
     end
   end
 
-  def day_objects(day, events)
-    events.select do |e|
+  def day_objects(day, days_array)
+    days_array.select do |e|
       e.date == day
     end
   end
@@ -69,19 +73,25 @@ module CalendarHelper
     shift == 'day'
   end
 
-  def draw_month(events,selected_month,options)
+  def draw_month(selected_month,options)
     range          = build_range selected_month, options
     month_array    = range.each_slice(7).to_a
     today = Date.today
     tags = []
+
+    start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
+    end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
+    days_array = Day.where( :date => start_date..end_date)
+
     tags << month_header(selected_month, options)
+
     content_tag(:table, :class => "calendar") do
       tags << table_header(options)
       tags << content_tag(:tbody) do
         tr = []
         month_array.each do |week|
           ['day','night'].each do |s|
-            tr << table_week(week, selected_month, today, s,events,options)
+            tr << table_week(week, selected_month, today, s,days_array,options)
           end.join.html_safe
         end.join.html_safe
         tr.join.html_safe
@@ -148,12 +158,10 @@ module CalendarHelper
     link_to(text, params.merge({:month => date.month, :year => date.year, :day => date.day} ), opts)
   end
 
-  def table_week(week, selected_month, today,s,events,options)
+  def table_week(week, selected_month, today,s,days_array,options)
     tr = []
     tr << content_tag(:tr, :class => s) do
-      td = []
-      
-
+      td = []      
       week.each do |day|
         td_class = ["week_day"]
         td_class << "today" if today == day
@@ -163,37 +171,37 @@ module CalendarHelper
 
         td << content_tag(:td, :class => td_class.join(" ")) do
           if (selected_month.month == day.month or options[:type] == 'week')
-          if(day_shift(s))
-            concat content_tag(:div,day.strftime("%d/%m")+ " denni", :class => 'date_number')
-          else
-            concat content_tag(:div, " nocni", :class => 'date_number')
-          end
-
-          html = []
-          created_day = nil
-          day_objects(day, events).each do |day_object|
-            created_day = true
-            day_object.day_collections.each do |col|
-              if(s == col.shift.shift)
-                html << "<div class='operator #{col.status.name}'>"
-                html << content_tag(:div, col.user.name,  :class => 'user')
-                html << link_destroy(col,day)
-                html << "</div>"
-              end
+            if(day_shift(s))
+              concat content_tag(:div,day.strftime("%d/%m")+ " denni", :class => 'date_number')
+            else
+              concat content_tag(:div, " nocni", :class => 'date_number')
             end
-            html << link_reservate(day, s) unless day_object.has_user?(1)
-          end.join.html_safe
 
-          html << link_reservate(day, s) unless created_day
+            html = []
+            created_day = nil
+            day_objects(day, days_array).each do |day_object|
+              created_day = true
+              day_object.day_collections.each do |col|
+                if(s == col.shift.shift)
+                  html << "<div class='operator #{col.status.name}'>"
+                  html << content_tag(:div, col.user.name,  :class => 'user')
+                  html << link_destroy(col,day)
+                  html << "</div>"
+                end
+              end
+              html << link_reservate(day, s) unless day_object.has_user?(1)
+            end.join.html_safe
 
-          if !day_shift(s)
+            html << link_reservate(day, s) unless created_day
+
+            if !day_shift(s)
             
-            html << "<div class='operator available admin'>"
-            html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day, s.to_s ))
-            html << "</div>"
+              html << "<div class='operator available admin'>"
+              html << link_to( "Admin", day_collection_admin_day_path(day.year ,day.month, day.day, s.to_s ))
+              html << "</div>"
           
-          end
-          concat html.join.html_safe
+            end
+            concat html.join.html_safe
           end
         end
       end.join.html_safe
