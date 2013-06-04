@@ -23,8 +23,7 @@ class DayCollectionsController < ApplicationController
     @day_collection = DayCollection.find(params[:id])
     
     day = @day_collection.day
-
-    if @day_collection.user_id == current_user.id
+    if @day_collection.user_id == current_user.id or current_user.admin?
         @day_collection.destroy
     else
       alert = "You can delete other people"

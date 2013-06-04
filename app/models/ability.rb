@@ -7,6 +7,7 @@ class Ability
 
     if user.role == "admin"
       can :manage, :all
+      cannot :confirm, DayCollection, :status_id => 1
     elsif user.role == "operator"
       can :read, [Day, DayCollection ]
       can :manage, DayCollection, :user_id => user.id

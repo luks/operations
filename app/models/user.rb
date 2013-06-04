@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
     self.find_by_sql("SELECT users.* FROM users WHERE users.id NOT IN  ( SELECT day_collections.user_id FROM day_collections  WHERE day_collections.day_id = #{day.id} )" )
   end
 
+  def admin?
+    self.role == 'admin'
+  end
+
 end
