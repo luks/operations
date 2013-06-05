@@ -93,7 +93,7 @@ class DatacentersController < ApplicationController
     end
 
   end
-
+  
   def day_reserve
 
     date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
