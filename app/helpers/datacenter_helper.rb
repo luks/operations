@@ -49,7 +49,8 @@ module DatacenterHelper
 
     start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
     end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
-    days_array = Day.where( :date => start_date..end_date, :center_id => options[:center_id])
+    
+    days_array = Day.day_collection_optimalised(start_date, end_date)
 
     tags << month_header(selected_month, options)
 
@@ -81,10 +82,7 @@ module DatacenterHelper
       start_date = selected_month.beginning_of_week(options[:start_day])
       end_date   = selected_month.end_of_week(options[:start_day])
 
-      #days_array = Day.where( :date => start_date..end_date, :center_id => options[:center_id])
-
       days_array = Day.day_collection_optimalised(start_date, end_date)
-
 
       tags << content_tag(:tbody) do
         tr = []
@@ -103,11 +101,13 @@ module DatacenterHelper
     end
   end
 
+  def user_ocupied?(day_array)
+    day_array.detect { |day| day.user_id == current_user.id }
+  end
+  
   def day_shift(shift)
     shift == 'day'
   end
-
-
  
   def table_header(options)
     day_names = I18n.t("date.abbr_day_names")
@@ -181,40 +181,31 @@ module DatacenterHelper
             end
 
             html = []
-            created_day = nil
-            #day_objects(day, days_array).each do |day_object|
-              created_day = true
-            days_array.each do |collection| 
-              if collection.date == day 
+    
+            day_array = day_objects(day, days_array)
+            user_ocupied = user_ocupied?(day_array)
+
+            day_array.each do |collection| 
+                created_day = true 
                 if collection.center_id == options[:center_id] 
                   if(s == collection.shift)
                     html << "<div class='operator #{collection.status}'>"
                     html << content_tag(:div, collection.user,  :class => 'user')
-                    #html << link_destroy(options,col,day)
-                    #html << link_confirm(options,col,day)
+                    html << link_destroy(options,collection.col_id,day) 
+                    html << link_confirm(options,collection.col_id,day)
                     html << "</div>"
                   end
                 end
-              end   
-              #day_object.day_collections.each do |col|
-              #  if(s == col.shift.shift)
-              #    html << "<div class='operator #{col.status.name}'>"
-              #    html << content_tag(:div, col.user.name,  :class => 'user')
-              #    html << link_destroy(options,col,day)
-              #    html << link_confirm(options,col,day)
-              #    html << "</div>"
-              #  end
-              #end
-
-              #html << link_reservate(options,day, s) unless day_object.has_user?(current_user) 
             end.join.html_safe
-            html << link_reservate(options,day, s) unless created_day
+            html << link_reservate(options,day, s) unless user_ocupied
 
             if !day_shift(s)
               html << link_admin_reserv(options,day)
             end
+
             concat html.join.html_safe
           end
+
         end
       end.join.html_safe
       td.join.html_safe
@@ -240,15 +231,16 @@ module DatacenterHelper
     tags.join.html_safe
   end
 
-  def link_destroy(options,collection, day)
-    if can?(:destroy, collection)
-      link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, collection.id ))
+  def link_destroy(options, col_id, day)
+    #to do col_id is not object any more
+    if can?(:destroy, DayCollection.find(col_id))
+      link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
     end
   end
 
-  def link_confirm(options,collection, day)
-    if can?(:day_confirm, collection)
-      link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, collection.id ))
+  def link_confirm(options, col_id, day)
+    if can?(:day_confirm, DayCollection.find(col_id))
+      link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
     end
   end
 
