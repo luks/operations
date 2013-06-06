@@ -14,7 +14,7 @@ class Ability
       can :manage, DayCollection, :user_id => user.id
       can :manage, Datacenter
       can :manage, :day_reserve
-      cannot [:multiple, :admin_day, :day_confirm], DayCollection
+      cannot [:admin_manage_days, :admin_process_days, :day_confirm], DayCollection
     end
   end
 end
