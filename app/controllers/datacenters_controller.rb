@@ -97,14 +97,14 @@ class DatacentersController < ApplicationController
   def day_reserve
 
     date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    day = Day.where(:date => date, :center_id => params[:id]).first
+    day = Day.find_by_date(date)
     if day.nil?
-      day = Day.create(:date => date,:center_id => params[:id]);
+      day = Day.create(:date => date);
       day.save
     end
     shift_id = params[:shift] == 'day' ? 1 : 2
-
-    day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id )
+    center_id = params[:id] 
+    day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id,:center_id => center_id )
     day_collection.save
 
     respond_to do |format|
@@ -137,16 +137,16 @@ class DatacentersController < ApplicationController
   def admin_manage_days
 
     date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    @day = Day.where(:date => date, :center_id => params[:id]).first
+    @day = Day.find_by_date(date)
     if @day.nil?
-      @day = Day.create(:date => date, :center_id => params[:id]);
+      @day = Day.create(:date => date);
     end
     @collections = @day.day_collections.all
     users = User.free_for_shift(@day)
 
     collections_new = []
     users.each do |user|
-      collections_new << @day.day_collections.new(:user_id => user.id)
+      collections_new << @day.day_collections.new(:user_id => user.id, :center_id => params[:id])
     end
     @collections_new = collections_new
 
@@ -189,8 +189,8 @@ class DatacentersController < ApplicationController
           if(users.include? r[:user_id])
             sql = ActiveRecord::Base.send(:sanitize_sql_array,
              ["INSERT INTO day_collections
-             (day_id, shift_id, status_id, user_id) VALUES
-             (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]})"]
+             (day_id, shift_id, status_id, user_id, center_id) VALUES
+             (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]},#{r[:center_id]})"]
             )
             DayCollection.connection.execute(sql)
           end

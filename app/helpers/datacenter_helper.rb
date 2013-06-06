@@ -17,42 +17,42 @@ module DatacenterHelper
     }
     options.reverse_merge! opts
         
-    selected_month = Date.new(options[:year], options[:month],options[:day])
+    selected_date = Date.new(options[:year], options[:month],options[:day])
     if(options[:type] == "week")
-      draw_week(selected_month,options)
+      draw_week(selected_date,options)
     else
-      draw_month(selected_month, options)
+      draw_month(selected_date, options)
     end
   end
 
 
   private
 
-  def build_week_range(selected_month, options)
-    start_date = selected_month.beginning_of_week(options[:start_day])
-    end_date   = selected_month.end_of_week(options[:start_day])
+  def build_week_range(selected_date, options)
+    start_date = selected_date.beginning_of_week(options[:start_day])
+    end_date   = selected_date.end_of_week(options[:start_day])
     (start_date..end_date).to_a
   end
 
-  def build_range(selected_month, options)
-    start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
-    end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
+  def build_range(selected_date, options)
+    start_date = selected_date.beginning_of_month.beginning_of_week(options[:start_day])
+    end_date   = selected_date.end_of_month.end_of_week(options[:start_day])
     (start_date..end_date).to_a
   end
 
-  def draw_month(selected_month,options)
+  def draw_month(selected_date,options)
 
-    range          = build_range selected_month, options
+    range          = build_range selected_date, options
     month_array    = range.each_slice(7).to_a
     today = Date.today
     tags = []
 
-    start_date = selected_month.beginning_of_month.beginning_of_week(options[:start_day])
-    end_date   = selected_month.end_of_month.end_of_week(options[:start_day])
+    start_date = selected_date.beginning_of_month
+    end_date   = selected_date.end_of_month
     
     days_array = Day.day_collection_optimalised(start_date, end_date)
 
-    tags << month_header(selected_month, options)
+    tags << month_header(selected_date, options)
 
     content_tag(:table, :class => "calendar") do
       tags << table_header(options)
@@ -60,7 +60,7 @@ module DatacenterHelper
         tr = []
         month_array.each do |week|
           ['day','night'].each do |s|
-            tr << table_week(week, selected_month, today, s,days_array,options)
+            tr << table_week(week, selected_date, today, s,days_array,options)
           end.join.html_safe
         end.join.html_safe
         tr.join.html_safe
@@ -69,25 +69,25 @@ module DatacenterHelper
     end
   end
 
-  def draw_week(selected_month, options)
+  def draw_week(selected_date, options)
 
-    week = build_week_range(selected_month, options)
+    week = build_week_range(selected_date, options)
     today = Date.today
     tags = []
-    tags << week_header(selected_month, options)
+    tags << week_header(selected_date, options)
     content_tag(:table, :class => options[:class]) do
       
       tags << table_header(options)
 
-      start_date = selected_month.beginning_of_week(options[:start_day])
-      end_date   = selected_month.end_of_week(options[:start_day])
+      start_date = selected_date.beginning_of_week(options[:start_day])
+      end_date   = selected_date.end_of_week(options[:start_day])
 
       days_array = Day.day_collection_optimalised(start_date, end_date)
 
       tags << content_tag(:tbody) do
         tr = []
         ['day','night'].each do |s|
-          tr << table_week(week, selected_month, today, s, days_array, options)
+          tr << table_week(week, selected_date, today, s, days_array, options)
         end.join.html_safe
         tr.join.html_safe
       end
@@ -126,17 +126,17 @@ module DatacenterHelper
     end
   end
 
-  def month_header(selected_month, options)
+  def month_header(selected_date, options)
     content_tag :div, :class => "calendar_navigation" do
-      previous_month = selected_month.advance :months => -1
-      next_month = selected_month.advance :months => 1
+      previous_month = selected_date.advance :months => -1
+      next_month = selected_date.advance :months => 1
       tags = []
 
       tags << link_month(options[:prev_text], previous_month, options[:params], {:class => "previous-month"})
-      tags << "#{I18n.t("date.month_names")[selected_month.month]} #{selected_month.year}"
+      tags << "#{I18n.t("date.month_names")[selected_date.month]} #{selected_date.year}"
       tags << link_month(options[:next_text], next_month, options[:params], {:class => "next-month"})
       tags << " ---------------- "
-      tags << link_overview(options, I18n.t("mydate.week"),selected_month,'week')
+      tags << link_overview(options, I18n.t("mydate.week"),selected_date,'week')
       tags.join.html_safe
     end
   end
@@ -161,19 +161,19 @@ module DatacenterHelper
   
 
 
-  def table_week(week, selected_month, today,s,days_array,options)
+  def table_week(week, selected_date, today,s,days_array,options)
     tr = []
     tr << content_tag(:tr, :class => s) do
       td = []      
       week.each do |day|
         td_class = ["week_day"]
         td_class << "today" if today == day
-        td_class << "not-current-month" if selected_month.month != day.month
+        td_class << "not-current-month" if selected_date.month != day.month
         td_class << "past" if today > day
         td_class << "future" if today < day
 
         td << content_tag(:td, :class => td_class.join(" ")) do
-          if (selected_month.month == day.month or options[:type] == 'week')
+          if (selected_date.month == day.month or options[:type] == 'week')
             if(day_shift(s))
               concat content_tag(:div,day.strftime("%d/%m")+ " denni", :class => 'date_number')
             else
@@ -224,11 +224,13 @@ module DatacenterHelper
   end
   
   def link_reservate(options,day,s)
-    tags = []
-    tags << "<div class='operator available'>"
-    tags <<  link_to( "Volno", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
-    tags << "</div>"
-    tags.join.html_safe
+    if can?(:manage,:day_reserve)
+      tags = []
+      tags << "<div class='operator available'>"
+      tags <<  link_to( "Volno", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
+      tags << "</div>"
+      tags.join.html_safe
+    end
   end
 
   def link_destroy(options, col_id, day)

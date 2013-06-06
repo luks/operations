@@ -9,7 +9,8 @@
   </strong>
 
     <%= f.hidden_field :day_id, :value => @day.id %>
-    <%= f.hidden_field :user_id, :value => collection.user.id %>
+    <%= f.hidden_field :user_id, :value => collection.user_id %>
+    <%= f.hidden_field :center_id, :value => collection.center_id %>
     <% unless collection.id.nil? %>
       <%= f.hidden_field :id, :value => collection.id %>
     <% end %>

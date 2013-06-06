@@ -5,6 +5,7 @@ class CreateDayCollections < ActiveRecord::Migration
       t.integer :status_id
       t.integer :shift_id
       t.integer :day_id	
+      t.integer :center_id
     end
   end
 end
