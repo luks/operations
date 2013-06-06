@@ -31,43 +31,16 @@ Operations::Application.routes.draw do
 
 
 
-
-
-
-
-
-
   devise_for :users
 
-  resources :days
-
-  match 'day_collections/:year/:month/:day/:shift' => 'day_collections#day',
-    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
-    :as => 'day_collection_day'
-
-  match 'day_collections/admin/:year/:month/:day' => 'day_collections#admin_day',
-    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ },
-    :as => 'day_collection_admin_day'
-
-  match 'day_collections/destroy/:year/:month/:day/:id' => 'day_collections#destroy',
-    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :id => /\d+/ },
-    :as => 'day_collection_destroy'
-
-  match 'day_collections/confirm/:year/:month/:day/:id' => 'day_collections#confirm',
-    :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :id => /\d+/ },
-    :as => 'day_collection_confirm'
-
-  match 'day_collections/admin/multiple' => 'day_collections#multiple',
-    :as => 'day_collection_multiple', :via => :post
-
-  match 'day_collections/set_overview/:overview' => 'day_collections#set_overview',
-    :constraints => { :overview => /month|week/ },
-    :as => 'day_collection_set_overview'
-
-  match 'day_collections' => 'day_collections#index',
-    :as => 'day_collections'
+  #devise_for :users, :skip => [:registrations]                                          
+  #  as :user do
+  #    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
+  #    put 'users' => 'devise/registrations#update', :as => 'user_registration'            
+  #  end
 
 
+  
 
 #  match 'day_collections/quick' => 'day_collections#quick_reservations',
 #    :as => 'day_collection_quick', :via => :post

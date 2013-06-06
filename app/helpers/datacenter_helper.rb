@@ -141,19 +141,19 @@ module DatacenterHelper
     end
   end
 
-  def week_header(selected_week, options)
+  def week_header(selected_date, options)
     content_tag :div, :class => "calendar_navigation" do
-      previous_week = selected_week.beginning_of_week(options[:start_day]).advance :days => -1
-      next_week = selected_week.end_of_week(options[:start_day]).advance :days => 1
+      previous_week = selected_date.beginning_of_week(options[:start_day]).advance :days => -1
+      next_week = selected_date.end_of_week(options[:start_day]).advance :days => 1
       tags = []
 
       tags << link_week(options[:prev_text], previous_week, options[:params], {:class => "previous-week"})
-      tags << " #{selected_week.beginning_of_week(options[:start_day]).strftime("%d/%m")}"
+      tags << " #{selected_date.beginning_of_week(options[:start_day]).strftime("%d/%m")}"
       tags << " - "
-      tags << " #{selected_week.end_of_week(options[:start_day]).strftime("%d/%m %Y")}"
+      tags << " #{selected_date.end_of_week(options[:start_day]).strftime("%d/%m %Y")}"
       tags << link_week(options[:next_text], next_week, options[:params], {:class => "next-week"})
       tags << " ---------------- "
-      tags << link_overview(options,I18n.t("mydate.month"),selected_week,'month')
+      tags << link_overview(options,I18n.t("mydate.month"),selected_date,'month')
 
       tags.join.html_safe
     end
