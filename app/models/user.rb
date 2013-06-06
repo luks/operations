@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   def self.free_for_shift(day)
     self.find_by_sql("SELECT users.* FROM users WHERE users.id NOT IN
     ( SELECT day_collections.user_id FROM days LEFT JOIN day_collections
-  ON day_collections.day_id = days.id WHERE days.date = '#{day.date}' AND day_collections.user_id IS NOT NULL)")
+  ON day_collections.day_id = days.id WHERE days.date = '#{day.date}' AND day_collections.user_id IS NOT NULL) AND users.role IS NOT 'admin'")
   end
 
 

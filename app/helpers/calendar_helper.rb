@@ -64,6 +64,7 @@ module CalendarHelper
 
   def day_objects(day, days_array)
     days_array.select do |e|
+      puts "iteration:"
       e.date == day
     end
   end
