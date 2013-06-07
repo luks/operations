@@ -6,7 +6,7 @@ module DatacenterHelper
     opts = {
       :year       => (params[:year] || Time.zone.now.year).to_i,
       :month      => (params[:month] || Time.zone.now.month).to_i,
-      :day       => (params[:day] || Time.zone.now.day).to_i,
+      :day        => (params[:day] || Time.zone.now.day).to_i,
       :prev_text  => raw(" &laquo; "),
       :next_text  => raw(" &raquo; "),
       :start_day  => :monday,
@@ -51,6 +51,9 @@ module DatacenterHelper
     end_date   = selected_date.end_of_month
     
     days_array = Day.day_collection_optimalised(start_date, end_date)
+    day_collection = DayCollection.optimalised(start_date, end_date)
+    
+    @day_collections_hash = day_collection.inject({}) { |h, i| h[i.id] = i; h }
 
     tags << month_header(selected_date, options)
 
@@ -83,6 +86,10 @@ module DatacenterHelper
       end_date   = selected_date.end_of_week(options[:start_day])
 
       days_array = Day.day_collection_optimalised(start_date, end_date)
+      day_collection = DayCollection.optimalised(start_date, end_date)
+
+      @day_collections_hash = day_collection.inject({}) { |h, i| h[i.id] = i; h }
+
 
       tags << content_tag(:tbody) do
         tr = []
@@ -235,13 +242,13 @@ module DatacenterHelper
 
   def link_destroy(options, col_id, day)
     #to do col_id is not object any more
-    if can?(:destroy, DayCollection.find(col_id))
+    if can?(:destroy, @day_collections_hash[col_id])
       link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
     end
   end
 
   def link_confirm(options, col_id, day)
-    if can?(:day_confirm, DayCollection.find(col_id))
+    if can?(:day_confirm, @day_collections_hash[col_id])
       link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
     end
   end

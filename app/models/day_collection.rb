@@ -8,7 +8,7 @@ class DayCollection < ActiveRecord::Base
   
   def self.optimalised(from, to)
     self.find_by_sql("SELECT day_collections.* FROM day_collections 
-                      LEFT JOIN dayS ON day_collections.day_id = days.id 
+                      LEFT JOIN days ON day_collections.day_id = days.id 
                       WHERE  (days.date BETWEEN '#{from}' AND '#{to}')")
   end     	        
 
