@@ -19,7 +19,7 @@
 #    User.create(name: "Marko")
 #    User.create(name: "Jelena")
 
-
+	User.create(name:"admin", role:"admin", email: "admin@operator.com", password:"admin")
     Status.create(name: "approved",title: "Schvaleno")
     Status.create(name: "reserved",title: "Rezervovano")
   
