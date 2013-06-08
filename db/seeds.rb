@@ -6,53 +6,25 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#    Event.create(name: "first")
-#    Event.create(name: "second")
-#    Event.create(name: "third")
-#    Event.create(name: "fourth")
+	User.create(name: 'lukapiske',email: 'lukapiske@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"admin")
 
+	User.create(name: 'Martina',email: 'toto@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Katarina',email: 'kata@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Ivo',email: 'ivo@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Biserka',email: 'bisa@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Nedeljko',email: 'nede@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Katica',email: 'katica@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
+	User.create(name: 'Ceca',email: 'ceca@gmail.com', password: 'martina1984', password_confirmation: 'martina1984',role:"operator")
 
-#    User.create(name: "Luka")
-#    User.create(name: "Martina")
-#    User.create(name: "Katarina")
-#    User.create(name: "Biserka")
-#    User.create(name: "Marko")
-#    User.create(name: "Jelena")
+	    
 
-	User.create(name:"admin", role:"admin", email: "admin@admin.com", password:"admin1234")
     Status.create(name: "approved",title: "Schvaleno")
     Status.create(name: "reserved",title: "Rezervovano")
   
-    
-    
-
-#    Eventuser.create(status_id:2,event_id:1,user_id:1)
-#    Eventuser.create(status_id:1,event_id:1,user_id:2)
-#    Eventuser.create(status_id:1,event_id:1,user_id:3)
-#    Eventuser.create(status_id:2,event_id:1,user_id:4)
-#    Eventuser.create(status_id:2,event_id:2,user_id:1)
-#    Eventuser.create(status_id:3,event_id:2,user_id:2)
-#    Eventuser.create(status_id:2,event_id:2,user_id:3)
-#    Eventuser.create(status_id:3,event_id:3,user_id:1)
-#
-
-#    Day.create(date:  Date.new( 2013, 05, 31))
-#    Day.create(date:  Date.new( 2013, 06, 1 ))
-#    Day.create(date:  Date.new( 2013, 06, 2 ))
-#    Day.create(date:  Date.new( 2013, 06, 3 ))
-#    Day.create(date:  Date.new( 2013, 06, 4 ))
-#    Day.create(date:  Date.new( 2013, 05, 1 ))
-#    Day.create(date:  Date.new( 2013, 05, 2 ))
-#    Day.create(date:  Date.new( 2013, 05, 3 ))
-#    Day.create(date:  Date.new( 2013, 05, 4 ))
-#    Day.create(date:  Date.new( 2013, 05, 5 ))
-#    Day.create(date:  Date.new( 2013, 05, 6 ))
-#    Day.create(date:  Date.new( 2013, 05, 7 ))
-#    Day.create(date:  Date.new( 2013, 05, 4 ))
-#
     Shift.create(name: "denni",shift: "day")
     Shift.create(name: "nocni",shift: "night")
-   
+	
+	Datacenter.create([{name:"NORTH"},{name:"SOUTH"}])   
 
 #    DayCollection.create(day_id:1,user_id:1,status_id:2,shift_id:1)
 #    DayCollection.create(day_id:1,user_id:2,status_id:1,shift_id:1)
