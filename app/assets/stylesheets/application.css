@@ -11,3 +11,95 @@
  *= require_self
  *= require_tree .
  */
+
+form    {
+
+	background: -webkit-gradient(linear, bottom, left 175px, from(#CCCCCC), to(#EEEEEE));
+	background: -moz-linear-gradient(bottom, #CCCCCC, #EEEEEE 175px);
+	margin:auto;
+	position:relative;
+	width:400px;
+	height:auto;
+
+
+	line-height: 24px;
+	font-weight: bold;
+
+	text-decoration: none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding:25px;
+	border: 1px solid #999;
+	border: inset 1px solid #333;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+input    {
+	width:300px;
+	padding:0px 0px 0px 5px;
+	display:block;
+	border: 1px solid #999;
+	height: 25px;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+.actions input {
+	width:200px;
+	position:absolute;
+	right:20px;
+	bottom:20px;
+	background:#4957c0;
+	color:#fff;
+	height:30px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1p solid #999;
+}
+.actions input:hover {
+	background:#fff;
+	color:#4957c0;
+}
+
+.menu-holder {
+	background: #4957c0;
+	color:#fff;
+	-moz-border-radius : 5px;
+}
+
+#nav {
+	list-style: none;
+	background: #4957c0;
+	margin:auto;
+	padding:0px;
+	height: 35px;
+	width: auto;
+}
+#nav li {
+	float: left;
+	height: 35px;
+	border-right: 1px solid #fff;
+	text-align: center;
+}
+#nav li a{
+	color : white;
+	display:block;
+	border-right: 2px solid #FFF;
+	line-height: 35px;
+	padding: 0 10px 0 10px;
+	text-decoration : none;
+	outline: none;
+	border-right: 1px solid #FFF;
+}
+#nav li.first {
+	border-left: 1px solid #FFF;
+}
+#nav li a:hover{
+	background : #FFF;
+	color:#4957c0;
+}

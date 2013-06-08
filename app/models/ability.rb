@@ -8,13 +8,13 @@ class Ability
     if user.role == "admin"
       can :manage, :all
       cannot :day_confirm, DayCollection, :status_id => 1
-      cannot :manage, :day_reserve
+      cannot :day_reserve, Datacenter
     elsif user.role == "operator"
       can :read, [Day, DayCollection, Datacenter ]
       can :manage, DayCollection, :user_id => user.id
-      can :manage, Datacenter
-      can :manage, :day_reserve
+      can [:day_reserve, :day_destroy, :set_viewport], Datacenter
       cannot [:admin_manage_days, :admin_process_days, :day_confirm], DayCollection
+
     end
   end
 end

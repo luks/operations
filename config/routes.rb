@@ -5,9 +5,9 @@ Operations::Application.routes.draw do
   root :to => 'datacenters#index'
 
 
-  match 'datacenters/:id/view/:view' => 'datacenters#set_view',
-    :constraints => { :id => /\d+/,:view => /month|week/ },
-    :as => 'datacenters_view'
+  match 'datacenters/:id/viewport/:viewport' => 'datacenters#set_viewport',
+    :constraints => { :id => /\d+/,:viewport => /month|week/ },
+    :as => 'datacenters_viewport'
 
   match 'datacenters/:id/reservate/:year/:month/:day/:shift' => 'datacenters#day_reserve',
     :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
@@ -31,13 +31,10 @@ Operations::Application.routes.draw do
 
 
 
-  devise_for :users
+  
 
-  #devise_for :users, :skip => [:registrations]                                          
-  #  as :user do
-  #    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
-  #    put 'users' => 'devise/registrations#update', :as => 'user_registration'            
-  #  end
+  devise_for :users, :path_prefix => 'auth'
+  resources :users
 
 
   

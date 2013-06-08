@@ -5,7 +5,7 @@ class DatacentersController < ApplicationController
   def index
 
     @datacenters = Datacenter.all
-    @view = session[:view]
+    @viewport = session[:viewport]
     
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class DatacentersController < ApplicationController
   # GET /datacenters/1.json
   def show
     @datacenter = Datacenter.find(params[:id])
-    @view = session[:view]
+    @viewport = session[:viewport]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -85,11 +85,11 @@ class DatacentersController < ApplicationController
     end
   end
 
-  def set_view
+  def set_viewport
 
-    session[:view] = params[:view] || 'week'
+    session[:viewport] = params[:viewport] || 'week'
     respond_to do |format|
-      format.html { redirect_to datacenter_url(params) }
+      format.html { redirect_to datacenters_url(params) }
     end
 
   end
@@ -207,7 +207,7 @@ class DatacentersController < ApplicationController
   private
   def date_to_params(date)
     hash = { :year => date.year, :month => date.month  }
-    if session[:view] == 'week'
+    if session[:viewport] == 'week'
       hash = { :year => date.year, :month => date.month, :day => date.day}
     end
     hash

@@ -15,7 +15,9 @@
       <%= f.hidden_field :id, :value => collection.id %>
     <% end %>
 </td>
-
+<td>
+  <%= f.select(:status_id, Datacenter.all.map { |center| [ center.name, center.id]}) %>
+</td>
 <td class="<%=  collection.status.name unless collection.status.nil? %>">
   <%= f.label :status_id %>
 </td>

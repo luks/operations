@@ -11,14 +11,16 @@ module DatacenterHelper
       :next_text  => raw(" &raquo; "),
       :start_day  => :monday,
       :class      => "calendar",
-      :type       => params[:type] || "month",
+      :viewport       => options[:type],
       :params     => {},
       :center_id  =>  datacenter.id
     }
+
+    puts options
     options.reverse_merge! opts
         
     selected_date = Date.new(options[:year], options[:month],options[:day])
-    if(options[:type] == "week")
+    if(options[:viewport] == "week")
       draw_week(selected_date,options)
     else
       draw_month(selected_date, options)
@@ -143,7 +145,7 @@ module DatacenterHelper
       tags << "#{I18n.t("date.month_names")[selected_date.month]} #{selected_date.year}"
       tags << link_month(options[:next_text], next_month, options[:params], {:class => "next-month"})
       tags << " ---------------- "
-      tags << link_overview(options, I18n.t("mydate.week"),selected_date,'week')
+      tags << link_viewport(options, I18n.t("mydate.week"),selected_date,'week')
       tags.join.html_safe
     end
   end
@@ -160,7 +162,7 @@ module DatacenterHelper
       tags << " #{selected_date.end_of_week(options[:start_day]).strftime("%d/%m %Y")}"
       tags << link_week(options[:next_text], next_week, options[:params], {:class => "next-week"})
       tags << " ---------------- "
-      tags << link_overview(options,I18n.t("mydate.month"),selected_date,'month')
+      tags << link_viewport(options,I18n.t("mydate.month"),selected_date,'month')
 
       tags.join.html_safe
     end
@@ -231,7 +233,7 @@ module DatacenterHelper
   end
   
   def link_reservate(options,day,s)
-    if can?(:manage,:day_reserve)
+    if can?(:day_reserve, Datacenter)
       tags = []
       tags << "<div class='operator available'>"
       tags <<  link_to( "Volno", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
@@ -253,12 +255,12 @@ module DatacenterHelper
     end
   end
 
-  def link_overview(options, name, day, overview)
-    link_to("#{name}", datacenters_view_path(options[:center_id],:year => day.year , :month => day.month, :day => day.day, :view => overview ))
+  def link_viewport(options, name, day, overview)
+    link_to("#{name}", datacenters_viewport_path(options[:center_id],:year => day.year , :month => day.month, :day => day.day, :viewport => overview ))
   end
 
   def link_admin_reserv(options,day)
-    if can?(:manage, :multiple)
+    if can?(:admin_manage_days, Datacenter)
       html =[]
       html << "<div class='operator available admin'>"
       html << link_to( "Admin", datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))

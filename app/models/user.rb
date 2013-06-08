@@ -1,12 +1,11 @@
 class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :validatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role
-  has_many :eventuser
-  has_many :events, :through => :eventuser, :uniq => true 
+
   has_one :day_collection
 
   ROLES = %w[admin operator]

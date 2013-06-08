@@ -1,26 +1,7 @@
-<h1>Listing datacenters</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @datacenters.each do |datacenter| %>
-  <tr>
-    <td><%= datacenter.name %></td>
-    <td><%= link_to 'Show', datacenter %></td>
-    <td><%= link_to 'Edit', edit_datacenter_path(datacenter) %></td>
-    <td><%= link_to 'Destroy', datacenter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% @datacenters.each do |center| %>
 
-  </tr>
-
-  <%=  datacenter  datacenter, {:type => "#{@view}"}  %>
+  <%=  datacenter  center, {:type => @viewport}  %>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Datacenter', new_datacenter_path %>
