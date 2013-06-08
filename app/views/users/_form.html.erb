@@ -10,14 +10,14 @@
       </ul>
     </div>
   <% end %>
-
+  <% disabled = !current_user.admin? %>
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :disabled => disabled   %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :disabled => disabled  %>
   </div>
   <div class="field">
     <%= f.label :password %><br />
@@ -29,7 +29,7 @@
   </div>
   <div class="field">
     <%= f.label :role %><br />
-    <%= f.collection_select :role, User::ROLES, :to_s, :humanize %>  
+    <%= f.collection_select :role, User::ROLES, :to_s, :humanize, {}, {:disabled => disabled}  %>  
   </div>  
   <div class="actions">
     <%= f.submit %>

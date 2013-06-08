@@ -172,8 +172,10 @@ module DatacenterHelper
 
   def table_week(week, selected_date, today,s,days_array,options)
     tr = []
+
     tr << content_tag(:tr, :class => s) do
-      td = []      
+      td = [] 
+
       week.each do |day|
         td_class = ["week_day"]
         td_class << "today" if today == day
@@ -182,15 +184,17 @@ module DatacenterHelper
         td_class << "future" if today < day
 
         td << content_tag(:td, :class => td_class.join(" ")) do
-          if (selected_date.month == day.month or options[:type] == 'week')
+          if (selected_date.month == day.month or options[:viewport] == 'week')
             if(day_shift(s))
-              concat content_tag(:div,day.strftime("%d/%m")+ " denni", :class => 'date_number')
+              concat content_tag(:div, day.strftime("%d/%m")+ " denni", :class => 'operator date_number')
             else
               concat content_tag(:div, " nocni", :class => 'date_number')
             end
 
             html = []
-    
+            if day_shift(s)
+              html << link_admin_reserv(options,day)
+            end
             day_array = day_objects(day, days_array)
             user_ocupied = user_ocupied?(day_array)
 
@@ -208,9 +212,7 @@ module DatacenterHelper
             end.join.html_safe
             html << link_reservate(options,day, s) unless user_ocupied
 
-            if !day_shift(s)
-              html << link_admin_reserv(options,day)
-            end
+            
 
             concat html.join.html_safe
           end

@@ -12,6 +12,14 @@
  *= require_tree .
  */
 
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
 form    {
 
 	background: -webkit-gradient(linear, bottom, left 175px, from(#CCCCCC), to(#EEEEEE));
@@ -20,6 +28,7 @@ form    {
 	position:relative;
 	width:400px;
 	height:auto;
+	min-height: 150px;
 
 
 	line-height: 24px;
@@ -50,7 +59,7 @@ input    {
 
 .actions input {
 	width:200px;
-	position:absolute;
+	/*position:absolute;*/
 	right:20px;
 	bottom:20px;
 	background:#4957c0;
@@ -103,3 +112,250 @@ input    {
 	background : #FFF;
 	color:#4957c0;
 }
+
+
+
+
+table a {
+	padding:10px;
+}
+table a:link {
+	
+	font-weight: bold;
+	text-decoration:none;
+}
+table a:visited {
+	
+	font-weight:bold;
+	text-decoration:none;
+}
+table a:active,
+table a:hover {
+	color: #bd5a35;
+	text-decoration:underline;
+}
+
+
+
+
+table {
+	
+	color:#666;
+	font-size:12px;
+	background:white;
+	margin:20px;
+	border:#ccc 1px solid;
+    border-collapse: collapse;
+
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+
+table input    {
+	width:auto;
+	padding:0px 0px 0px 5px;
+	display:block;
+	border: 1px solid #999;
+	
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+table th {
+	padding:5px 5px 5px 5px;
+	border-bottom:1px solid #e0e0e0;
+
+	background: white;
+
+}
+table th:first-child {
+	padding-left:5px;
+}
+table tr:first-child th:first-child {
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+table tr:first-child th:last-child {
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+table tr {
+	text-align: center;
+	padding-left:5px;
+}
+table td:first-child {
+	
+	border-left: 0;
+}
+table td {
+	padding:5px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+
+	background: #fafafa;
+
+}
+table tr.even td {
+	background: #f6f6f6;
+
+}
+table tr:last-child td {
+	border-bottom:0;
+}
+table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+table tr:last-child td:last-child {
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+table tr:hover td {
+	background: #f2f2f2;
+
+}
+
+
+
+
+
+
+
+div.calendar_navigation {
+    margin:auto;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    margin:10px;
+}
+
+
+.calendar {
+  margin: auto;
+}
+
+div.operator {
+    width:100%;
+    position:relative;
+    display:inline-block;
+    border:1px solid #D8D8D8 ;
+    
+}
+.approved {
+    color:white;
+    background:rgb(52, 204, 76) !important;
+}
+.reserved {
+    color:white;
+    background:rgb(253, 129, 71) !important;
+}
+.available {
+    background:white !important;
+}
+div.date_number {
+
+    margin:0;
+    vertical-align: top;
+    font-weight: bold;
+    background:rgb(235, 235, 235) !important;
+}
+div.admin {
+
+    margin:0;
+    color:white;
+    background:white !important;
+    border-bottom:1px solid #D8D8D8 ;
+
+    vertical-align: top;
+    font-weight: bold;
+ 
+
+}
+.monthName th {
+  font-weight: normal;
+  text-align: right;
+  padding-top: 1em;
+  padding-bottom: 0.7em;
+}
+
+th.dayName  {
+  font-size: 0.7em;
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  background-color: rgb(73, 87, 192);
+  color: white;
+}
+table.calendar td {
+    width:75px;
+}
+td.not-current-month {
+  background-color: rgba(253, 254, 255, 0.99) !important;
+}
+td.past {
+
+}
+
+td.week_day {
+  vertical-align:top;
+  padding: 1px 1px;
+  height: 100px !important;
+  width: 100px !important
+ 
+}
+tr.day td.week_day {
+  
+   background-color: #fff;
+}
+tr.night td.week_day {
+   background-color: #D8D8D8 ;
+}
+
+.otherMonth, .day, .specialDay {
+ 
+  border-right: 1px solid white;
+
+}
+
+.otherMonth {
+  color: #eeeeee;
+  background-color: white;
+}
+
+.day, .specialDay {
+  text-align: center;
+  background-color: #bbccff;
+}
+.specialDay {
+  background-color: #003355;
+  color: white;
+}
+.specialDay a, .specialDay a:visited, .specialDay a:hover {
+  color: white;
+  text-decoration: none;
+  
+}
+.specialDay a:hover {
+  color: white;
+}
+.weekendDay {
+  background-color: #ffffdd;
+}
+.today{
+	background-color: #FFFFCC !important;
+}
+
+
+
+/**.error, .alert, .notice, .success, .info {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;}
+.success {background:#e6efc2;color:#264409;border-color:#c6d880;}
+*/

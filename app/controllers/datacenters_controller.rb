@@ -5,8 +5,6 @@ class DatacentersController < ApplicationController
   def index
 
     @datacenters = Datacenter.all
-    @viewport = session[:viewport]
-    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @datacenters }
@@ -89,7 +87,7 @@ class DatacentersController < ApplicationController
 
     session[:viewport] = params[:viewport] || 'week'
     respond_to do |format|
-      format.html { redirect_to datacenters_url(params) }
+      format.html { redirect_to datacenter_url(params) }
     end
 
   end
@@ -167,7 +165,7 @@ class DatacentersController < ApplicationController
         params[:day_collections].map do |k,r|
           if(users.include? r[:user_id])
             sql_u = ActiveRecord::Base.send(:sanitize_sql_array,
-              ["UPDATE day_collections SET status_id = #{r[:status_id]},shift_id = #{r[:shift_id]}
+              ["UPDATE day_collections SET status_id = #{r[:status_id]},shift_id = #{r[:shift_id]},center_id = #{r[:center_id]}
               WHERE day_collections.id = #{r[:id]}"]
             )
             DayCollection.connection.execute(sql_u)

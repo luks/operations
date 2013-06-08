@@ -1,7 +1,24 @@
 
 
-<% @datacenters.each do |center| %>
+<h1>Listing datacenters</h1>
 
-  <%=  datacenter  center, {:type => @viewport}  %>
+<table class="calendar">
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @datacenters.each do |datacenter| %>
+  <tr>
+    <td><%= link_to  datacenter.name , datacenter %></td>
+    <td><%= link_to 'Edit', edit_datacenter_path(datacenter) unless cannot? :manage, Datacenter %></td>
+    <td><%= link_to 'Destroy', datacenter, method: :delete, data: { confirm: 'Are you sure?' } unless cannot? :manage, Datacenter %></td>
+  </tr>
 <% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Datacenter', new_datacenter_path  unless cannot? :manage, Datacenter %>
 

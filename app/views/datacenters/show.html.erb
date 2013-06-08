@@ -5,7 +5,5 @@
   <%= @datacenter.name %>
 </p>
 
-<%=  datacenter  @datacenter, {:type => "#{@view}"}  %>
+<%=  datacenter  @datacenter, {:viewport => "#{@viewport}"}  %>
 
-<%= link_to 'Edit', edit_datacenter_path(@datacenter) %> |
-<%= link_to 'Back', datacenters_path %>
