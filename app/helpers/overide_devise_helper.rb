@@ -1,2 +1,0 @@
-module OverideDeviseHelper
-end

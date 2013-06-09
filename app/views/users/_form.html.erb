@@ -30,7 +30,7 @@
   <div class="field">
     <%= f.label :role %><br />
     <%= f.collection_select :role, User::ROLES, :to_s, :humanize, {}, {:disabled => disabled}  %>  
-  </div>  
+  </div><br />  
   <div class="actions">
     <%= f.submit %>
   </div>
