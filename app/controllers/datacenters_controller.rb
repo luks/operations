@@ -112,9 +112,9 @@ class DatacentersController < ApplicationController
 
   def day_confirm
     day_collection = DayCollection.find(params[:coll_id])
-
-    Notifier.day_confirmation(day_collection).deliver
-
+    Thread.new do
+      Notifier.day_confirmation(day_collection).deliver
+    end  
     day = day_collection.day
     day_collection.update_attribute(:status_id, 1)
     respond_to do |format|
@@ -125,8 +125,14 @@ class DatacentersController < ApplicationController
   def day_destroy
 
     day_collection = DayCollection.find(params[:coll_id])
+ 
+ 
+
     day = day_collection.day
     if day_collection.user_id == current_user.id or current_user.admin?
+      Thread.new do
+        Notifier.day_destroy(day_collection,current_user).deliver
+      end
       day_collection.destroy
     end
     respond_to do |format|

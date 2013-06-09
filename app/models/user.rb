@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
     self.role == 'admin'
   end
 
+  def self.admin
+    self.where(:role => "admin").first
+  end   
+
 end
