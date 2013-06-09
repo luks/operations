@@ -15,7 +15,7 @@ gem 'devise'
 gem 'cancan'
 
 
-
+gem 'mail', '2.1.3'
 
 group :development, :test do
   gem "rspec-rails", ">= 2.0.1"

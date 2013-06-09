@@ -112,6 +112,9 @@ class DatacentersController < ApplicationController
 
   def day_confirm
     day_collection = DayCollection.find(params[:coll_id])
+
+    Notifier.day_confirmation(day_collection).deliver
+
     day = day_collection.day
     day_collection.update_attribute(:status_id, 1)
     respond_to do |format|
