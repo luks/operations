@@ -235,10 +235,10 @@ module DatacenterHelper
   end
   
   def link_reservate(options,day,s)
-    if can?(:day_reserve, Datacenter)
+    if can?(:day_reserve, Datacenter) and today_or_younger(day)
       tags = []
       tags << "<div class='operator available'>"
-      tags <<  link_to( "Volno", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
+      tags <<  link_to( "Zarezervovat", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
       tags << "</div>"
       tags.join.html_safe
     end
@@ -246,14 +246,14 @@ module DatacenterHelper
 
   def link_destroy(options, col_id, day)
     #to do col_id is not object any more
-    if can?(:destroy, @day_collections_hash[col_id])
+    if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day)
       link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
     end
   end
 
   def link_confirm(options, col_id, day)
-    if can?(:day_confirm, @day_collections_hash[col_id])
-      link_to( "Confirm", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
+    if can?(:day_confirm, @day_collections_hash[col_id]) and today_or_younger(day)
+      link_to( "Schvalit", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
     end
   end
 
@@ -262,14 +262,19 @@ module DatacenterHelper
   end
 
   def link_admin_reserv(options,day)
-    if can?(:admin_manage_days, Datacenter)
+    if can?(:admin_manage_days, Datacenter) and today_or_younger(day)
       html =[]
       html << "<div class='operator available admin'>"
-      html << link_to( "Admin", datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
+      html << link_to( "Administrace", datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
       html << "</div>"
       html.join.html_safe
     end
   end
+  
+  def today_or_younger(date)
+    Date.today <= date
+  end 
+    
 end
 
 
