@@ -206,7 +206,7 @@ class DatacentersController < ApplicationController
   def date_to_params(date)
     hash = { :year => date.year, :month => date.month  }
     if session[:viewport] == 'week'
-      hash = { :year => date.year, :month => date.month, :day => date.day}
+      hash.merge(:day => date.day)
     end
     hash
   end
