@@ -52,6 +52,7 @@ module DatacenterHelper
     start_date = selected_date.beginning_of_month
     end_date   = selected_date.end_of_month
     
+
     days_array = Day.day_collection_optimalised(start_date, end_date)
     day_collection = DayCollection.optimalised(start_date, end_date)
     

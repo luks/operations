@@ -112,11 +112,13 @@ class DatacentersController < ApplicationController
 
   def day_confirm
     day_collection = DayCollection.find(params[:coll_id])
-    Thread.new do
-      Notifier.day_confirmation(day_collection).deliver
-    end  
+
     day = day_collection.day
     day_collection.update_attribute(:status_id, 1)
+    Thread.new do
+      Notifier.shift_confirmation(day_collection).deliver
+      ActiveRecord::Base.connection.close
+    end  
     respond_to do |format|
       format.html {  redirect_to datacenter_url(params) }
     end
@@ -125,13 +127,12 @@ class DatacentersController < ApplicationController
   def day_destroy
 
     day_collection = DayCollection.find(params[:coll_id])
- 
- 
 
     day = day_collection.day
     if day_collection.user_id == current_user.id or current_user.admin?
       Thread.new do
-        Notifier.day_destroy(day_collection,current_user).deliver
+        Notifier.shift_destroy(day_collection,current_user).deliver
+        ActiveRecord::Base.connection.close
       end
       day_collection.destroy
     end
@@ -178,11 +179,20 @@ class DatacentersController < ApplicationController
               WHERE day_collections.id = #{r[:id]}"]
             )
             DayCollection.connection.execute(sql_u)
+                Thread.new do
+                  Notifier.admin_update_shift(DayCollection.find(r[:id])).deliver
+                  ActiveRecord::Base.connection.close
+                end
           else
             sql_d = ActiveRecord::Base.send(:sanitize_sql_array,
               ["DELETE FROM day_collections WHERE day_collections.id = #{r[:id]}"]
             )
+                Thread.new do
+                  Notifier.admin_delete_shift(DayCollection.find(r[:id])).deliver
+                  ActiveRecord::Base.connection.close
+                end
             DayCollection.connection.execute(sql_d)
+
           end
         end
       end
@@ -192,6 +202,7 @@ class DatacentersController < ApplicationController
 
     if(params[:day_collections_new])
       DayCollection.transaction do
+        threads = []
         params[:day_collections_new].map do |r|
           if(users.include? r[:user_id])
             sql = ActiveRecord::Base.send(:sanitize_sql_array,
@@ -200,8 +211,16 @@ class DatacentersController < ApplicationController
              (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]},#{r[:center_id]})"]
             )
             DayCollection.connection.execute(sql)
+              @day_collection = Day.find(r[:day_id]).day_collections.where(:user_id => r[:user_id]).first
+              threads << Thread.new do
+                  
+                  Notifier.admin_create_shift(@day_collection).deliver
+                  ActiveRecord::Base.connection.close
+              end
+
           end
         end
+        threads.each(&:join)
       end
     end
 
