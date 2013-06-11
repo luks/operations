@@ -13,12 +13,16 @@ class DayCollection < ActiveRecord::Base
     self.find_by_sql("SELECT day_collections.* FROM day_collections 
                       LEFT JOIN days ON day_collections.day_id = days.id 
                       WHERE  (days.date BETWEEN '#{from}' AND '#{to}')")
+  end
+
+  def self.attributes_to_ignore_when_comparing
+    [:id]
+  end
+
+  def identical?(other)
+    self.attributes.except(*self.class.attributes_to_ignore_when_comparing.map(&:to_s)) ==
+    other.attributes.except(*self.class.attributes_to_ignore_when_comparing.map(&:to_s))
   end     	        
 
-#  def send_confirmation_email
-#    if(self.status_id == 1) 
-#       Notifier.day_confirm(self.user.email) 
-#    end  
-#  end  
 
 end
