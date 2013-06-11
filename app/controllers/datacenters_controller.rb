@@ -180,6 +180,7 @@ class DatacentersController < ApplicationController
             )
             DayCollection.connection.execute(sql_u)
                 Thread.new do
+                  #to do params and object are same - no changes - don't send email
                   Notifier.admin_update_shift(DayCollection.find(r[:id])).deliver
                   ActiveRecord::Base.connection.close
                 end
@@ -202,7 +203,7 @@ class DatacentersController < ApplicationController
 
     if(params[:day_collections_new])
       DayCollection.transaction do
-        threads = []
+        @collections = []
         params[:day_collections_new].map do |r|
           if(users.include? r[:user_id])
             sql = ActiveRecord::Base.send(:sanitize_sql_array,
@@ -211,18 +212,18 @@ class DatacentersController < ApplicationController
              (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]},#{r[:center_id]})"]
             )
             DayCollection.connection.execute(sql)
-              @day_collection = Day.find(r[:day_id]).day_collections.where(:user_id => r[:user_id]).first
-              threads << Thread.new do
-                  
-                  Notifier.admin_create_shift(@day_collection).deliver
-                  ActiveRecord::Base.connection.close
-              end
-
+            @collections << DayCollection.where(:day_id => r[:day_id],:user_id => r[:user_id]).first 
           end
         end
-        threads.each(&:join)
       end
-    end
+        
+        Thread.new do  
+          @collections.each do |collection|        
+            Notifier.admin_create_shift(collection).deliver
+            ActiveRecord::Base.connection.close
+          end
+        end
+      end
 
     respond_to do |format|
         format.html {  redirect_to datacenter_url(date_to_params(day.date)) }

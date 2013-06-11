@@ -50,12 +50,11 @@ class Notifier < ActionMailer::Base
   end
 
   def admin_create_shift(day_collection)
-
-  		
-  	  @title = "Administrátor vytvoril vaší"
+	
+  	  		@title = "Administrátor vytvoril vaší"
 			subject = "Administrátor vytvoril směnu"
 			to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
 			mail(:to => to,:subject => subject) 
-
+			
   end	
 end
