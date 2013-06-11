@@ -180,8 +180,9 @@ class DatacentersController < ApplicationController
             )
             DayCollection.connection.execute(sql_u)
                 Thread.new do
-                  #to do params and object are same - no changes - don't send email
-                  Notifier.admin_update_shift(DayCollection.find(r[:id])).deliver
+                  day_collection = DayCollection.find(r[:id])
+                  fake = DayCollection.new(r)
+                  Notifier.admin_update_shift(day_collection).deliver unless fake.identical? day_collection
                   ActiveRecord::Base.connection.close
                 end
           else

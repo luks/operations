@@ -33,21 +33,6 @@ ActiveRecord::Schema.define(:version => 20130604130541) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "events", :force => true do |t|
-    t.string   "name"
-    t.date     "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "eventusers", :force => true do |t|
-    t.integer  "event_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "status_id"
-  end
-
   create_table "shifts", :force => true do |t|
     t.string   "name"
     t.string   "shift"

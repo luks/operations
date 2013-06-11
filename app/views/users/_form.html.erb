@@ -12,26 +12,27 @@
   <% end %>
   <% disabled = !current_user.admin? %>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label I18n.t("login.name")  %><br />
     <%= f.text_field :name, :disabled => disabled   %>
   </div>
   <div class="field">
-    <%= f.label :email %><br />
+     <%= f.label I18n.t("login.email")  %><br />
     <%= f.text_field :email, :disabled => disabled  %>
   </div>
   <div class="field">
-    <%= f.label :password %><br />
+    <div><%= f.label I18n.t("login.password") %><br />
     <%= f.password_field :password %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label I18n.t("login.password_confirmation")  %><br />
     <%= f.password_field :password_confirmation %>
   </div>
   <div class="field">
     <%= f.label :role %><br />
     <%= f.collection_select :role, User::ROLES, :to_s, :humanize, {}, {:disabled => disabled}  %>  
-  </div><br />  
+  </div>
+  <br />  
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Potvrdit" %>
   </div>
 <% end %>

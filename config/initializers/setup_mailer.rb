@@ -1,14 +1,14 @@
 
-# ActionMailer::Base.delivery_method = :smtp
-# ActionMailer::Base.smtp_settings = {
-#   :address              => "smtp.gmail.com",
-#   :port                 => 587,
-#   :domain               => "latoto.cz",
-#   :user_name            => "luka.musin",
-#   :password             => "martina1984",
-#   :authentication       => "plain",
-#   :enable_starttls_auto => true
-# }
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => "latoto.cz",
+  :user_name            => "luka.musin",
+  :password             => "martina1984",
+  :authentication       => "plain",
+  :enable_starttls_auto => true
+}
 
 
 
@@ -19,11 +19,11 @@
 #	:arguments      => '-i -t'
 #}
 
-ActionMailer::Base.delivery_method = :file
-ActionMailer::Base.file_settings = {
-	:location  =>  Rails.root.join('tmp/mails')
+# ActionMailer::Base.delivery_method = :file
+# ActionMailer::Base.file_settings = {
+# 	:location  =>  Rails.root.join('tmp/mails')
 	
-}
+# }
 
 ActionMailer::Base.default_url_options[:host] = "localhost:3000"
 require 'development_mail_interceptor'

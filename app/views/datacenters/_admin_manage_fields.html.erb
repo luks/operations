@@ -25,7 +25,7 @@
   <%= f.select(:status_id, Status.all.map { |status| [ status.title, status.id]}) %>
 </td>
 <td class="<%=  collection.shift.shift unless collection.shift.nil? %>">
-  <%= f.label :shift_id %>
+  <%= f.label "Směna" %>
 </td>
 <td>
   <%= f.select(:shift_id, Shift.all.map { |shift| [ shift.name, shift.id] }) %>

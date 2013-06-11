@@ -10,19 +10,22 @@
        
   <div class="menu-holder">
 	<ul id="nav">
-		<li><%= link_to "#{current_user.name}" unless current_user.blank? %></li>
-		<li><%= link_to "Datacenters", datacenters_path unless current_user.blank? %></li>
-		<li><%= link_to "Users", users_path unless cannot? :manage, User %></li>
+		<% unless current_user.blank? %>
+		<li><%= link_to "Datacentra", datacenters_path  %></li>
+		<li><%= link_to "Uživatelé", users_path unless cannot? :manage, User %></li>
 
 
-		<li><%= link_to "Change your password", edit_user_path(current_user) unless current_user.blank? %></li>
-		<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete  unless current_user.blank? %></li>
+		<li><%= link_to "Změnit heslo", edit_user_path(current_user) unless current_user.admin?  %></li>
+		<li><%= link_to I18n.t("login.sign_out"), destroy_user_session_path, :method => :delete  %></li>
+		<% end %>
 	</ul>
   </div>	
 <br />
-
-
-
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<% unless current_user.blank? %>
+	<strong><%= "Uživatel: ""#{current_user.name}" %></strong>
+<% end %>
 
 <%= yield %>
 

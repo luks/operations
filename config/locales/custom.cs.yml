@@ -1,5 +1,13 @@
 cs:
   mydate:
-    week: "Tyden"
+    week: "Týden"
     month: "Měsíc"
+  login:
+    sign_in: "Přihlášení"
+    sign_out: "Odhlásit se"
+    name: "Jméno"
+    email: "Email"
+    password: "Heslo"
+    password_confirmation: "Potvrdit heslo"
+    forgot_your_password: "Zapomněli jste své heslo?"
 

@@ -1,8 +1,9 @@
-<h1>Listing users</h1>
+<br /><strong>Seznam uživatelů</strong>
 
+<br /><%= link_to 'Nový uživatel', new_user_path %>
 <table class="calendar">
   <tr>
-    <th>Name</th>
+    <th>Jméno</th>
     <th>Email</th>
     <th>Role</th>
     <th></th>
@@ -15,13 +16,12 @@
     <td><%= user.name %></td>
     <td><%= user.email %></td>
     <td><%= user.role %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Ukázat', user %></td>
+    <td><%= link_to 'Změnit', edit_user_path(user) %></td>
+    <td><%= link_to 'Smazat', user, method: :delete, data: { confirm: 'Jste si jistý?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New User', new_user_path %>

@@ -34,6 +34,7 @@ class Notifier < ActionMailer::Base
   def admin_update_shift(day_collection)
 
   		@title = "Administrátor zmenil vaší"
+			@day_collection = day_collection
 			subject = "Administrátor zmenil vaší směnu"
 			to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
 			mail(:to => to,:subject => subject) 
@@ -42,7 +43,8 @@ class Notifier < ActionMailer::Base
   
   def admin_delete_shift(day_collection)
 
-  	  @title = "Administrátor zrušil vaší"
+  	 	@title = "Administrátor zrušil vaší"
+      @day_collection = day_collection
 			subject = "Administrátor zrušil vaší směnu"
 			to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
 			mail(:to => to,:subject => subject) 
@@ -51,8 +53,9 @@ class Notifier < ActionMailer::Base
 
   def admin_create_shift(day_collection)
 	
-  	  		@title = "Administrátor vytvoril vaší"
-			subject = "Administrátor vytvoril směnu"
+  		@title = "Administrátor vytvořil vaší"
+			subject = "Administrátor vytvořil směnu"
+			@day_collection = day_collection
 			to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
 			mail(:to => to,:subject => subject) 
 			

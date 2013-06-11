@@ -187,9 +187,9 @@ module DatacenterHelper
         td << content_tag(:td, :class => td_class.join(" ")) do
           if (selected_date.month == day.month or options[:viewport] == 'week')
             if(day_shift(s))
-              concat content_tag(:div, day.strftime("%d/%m")+ " denni", :class => 'operator date_number')
+              concat content_tag(:div, day.strftime("%d/%m")+ " Denní ", :class => 'operator date_number')
             else
-              concat content_tag(:div, " nocni", :class => 'date_number')
+              concat content_tag(:div, " Noční", :class => 'date_number')
             end
 
             html = []
@@ -246,15 +246,14 @@ module DatacenterHelper
   end
 
   def link_destroy(options, col_id, day)
-    #to do col_id is not object any more
     if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( "Zrusit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
+      link_to( "Zrušit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
     end
   end
 
   def link_confirm(options, col_id, day)
     if can?(:day_confirm, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( "Schvalit", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
+      link_to( "Schválit", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
     end
   end
 
