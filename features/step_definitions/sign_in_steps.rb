@@ -93,7 +93,6 @@ Then(/^I could change my password only$/) do
   #fill_in "user_password_confirmation", :with => 'martina1984'
   #click_button "Aktualizovat User"
   #page.should have_content "You need to sign in or sign up before continuing."
-
 end
 
 Given(/^administrator is logged in$/) do

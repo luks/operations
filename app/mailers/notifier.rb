@@ -1,11 +1,12 @@
 class Notifier < ActionMailer::Base
   	
-  default from: "operations@latoto.cz"
+  default from: "operation@application.com"
 
 	def shift_confirmation(day_collection)
 		
+		subject = "Oznámení o potvrzení směny"
 		@day_collection = day_collection
-	  mail(:to => "#{day_collection.user.name} <#{day_collection.user.email}>",:subject => "Oznámení o potvrzení směny") 
+	  mail(:to => "#{day_collection.user.name} <#{day_collection.user.email}>",:subject => subject) 
 
   end
 
@@ -32,7 +33,7 @@ class Notifier < ActionMailer::Base
   end	
 
   def admin_update_shift(day_collection)
-
+	
   		@title = "Administrátor zmenil vaší"
 			@day_collection = day_collection
 			subject = "Administrátor zmenil vaší směnu"

@@ -14,7 +14,7 @@ class DatacentersController < ApplicationController
   # GET /datacenters/1
   # GET /datacenters/1.json
   def show
-    @doubleview = true;
+    @doubleview = false;
     if @doubleview
       session[:viewport] = params[:viewport] || 'week'
       @datacenters = Datacenter.all

@@ -10,4 +10,6 @@ cs:
     password: "Heslo"
     password_confirmation: "Potvrdit heslo"
     forgot_your_password: "Zapomněli jste své heslo?"
+  users:  
+    list: "Seznam uživatelů"
 
