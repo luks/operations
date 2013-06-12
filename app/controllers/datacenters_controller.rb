@@ -14,7 +14,14 @@ class DatacentersController < ApplicationController
   # GET /datacenters/1
   # GET /datacenters/1.json
   def show
-    @datacenter = Datacenter.find(params[:id])
+    @doubleview = true;
+    if @doubleview
+      session[:viewport] = params[:viewport] || 'week'
+      @datacenters = Datacenter.all
+    else  
+      @datacenter = Datacenter.find(params[:id])
+    end  
+    
     @viewport = session[:viewport]
 
     respond_to do |format|

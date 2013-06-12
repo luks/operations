@@ -1,6 +1,13 @@
 
+<% if @doubleview %>
+	<% @datacenters.each do |center| %>
+		<br /><strong><%= center.name %></strong>
+		<%=  datacenter  center, {:viewport => "#{@viewport}"}  %>
+	<% end %>
+<% else %>
+	<strong> - Datacentrum:<%= @datacenter.name %></strong>
+	<%=  datacenter  @datacenter, {:viewport => "#{@viewport}"}  %>
+<% end %>	
 
-<strong> - Datacentrum:<%= @datacenter.name %></strong>
 
-<%=  datacenter  @datacenter, {:viewport => "#{@viewport}"}  %>
 
