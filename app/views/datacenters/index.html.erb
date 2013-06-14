@@ -2,6 +2,13 @@
 
 
 
+<% if @doubleview %>
+	<% @datacenters.each do |center| %>
+		<br /><strong><%= center.name %></strong>
+		<%=  datacenter  center, {:viewport => "#{@viewport}"}  %>
+	<% end %>
+<% else %>	
+
 <table class="calendar">
   <tr>
     <th collspan="3">Datacentra</th>
@@ -17,6 +24,7 @@
 </table>
 
 <br />
+<% end %>
 
 <%#= link_to 'Nové datacentro', new_datacenter_path  unless cannot? :manage, Datacenter %>
 

@@ -9,7 +9,7 @@ Operations::Application.routes.draw do
     :constraints => { :id => /\d+/,:viewport => /month|week/ },
     :as => 'datacenters_viewport'
 
-  match 'doubleview/:view' => 'datacenters#set_doubleview',
+  match 'doubleview/:double' => 'datacenters#set_doubleview',
     :as => 'datacenters_doubled', :via => :get  
 
   match 'datacenters/:id/reservate/:year/:month/:day/:shift' => 'datacenters#day_reserve',

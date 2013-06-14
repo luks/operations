@@ -4,6 +4,7 @@ class DatacentersController < ApplicationController
   load_and_authorize_resource
   def index
     @doubleview = session[:double]
+    @viewport = session[:viewport]
     @datacenters = Datacenter.all
     respond_to do |format|
       format.html # index.html.erb
@@ -102,10 +103,10 @@ class DatacentersController < ApplicationController
 
   def set_doubleview
       
-    session[:doubleview] = params[:double] || nil
+    session[:double] = params[:double] == 'double' ? 'double' : nil
     respond_to do |format|
-      format.html { redirect_to datacenter_url(params) }
-      end
+      format.html { redirect_to datacenters_url }
+    end
       
   end  
   
