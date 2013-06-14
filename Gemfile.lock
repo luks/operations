@@ -166,7 +166,7 @@ DEPENDENCIES
   database_cleaner
   devise
   execjs
-  factory_girl_rails (>= 4.2.0)
+  factory_girl_rails
   jquery-rails
   mail
   rails (= 3.2.13)
