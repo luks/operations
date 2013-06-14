@@ -16,7 +16,6 @@ module DatacenterHelper
       :center_id  =>  datacenter.id
     }
 
-    puts options
     options.reverse_merge! opts
         
     selected_date = Date.new(options[:year], options[:month],options[:day])
@@ -239,7 +238,7 @@ module DatacenterHelper
     if can?(:day_reserve, Datacenter) and today_or_younger(day)
       tags = []
       tags << "<div class='operator available'>"
-      tags <<  link_to( "Zarezervovat", datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
+      tags <<  link_to( I18n.t("calendar.actions.reservate_day"), datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
       tags << "</div>"
       tags.join.html_safe
     end
@@ -247,13 +246,13 @@ module DatacenterHelper
 
   def link_destroy(options, col_id, day)
     if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( "Zrušit", datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
+      link_to( I18n.t("calendar.actions.delete_day"), datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
     end
   end
 
   def link_confirm(options, col_id, day)
     if can?(:day_confirm, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( "Schválit", datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
+      link_to( I18n.t("calendar.actions.confirm_day"), datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
     end
   end
 
@@ -265,7 +264,7 @@ module DatacenterHelper
     if can?(:admin_manage_days, Datacenter) and today_or_younger(day)
       html =[]
       html << "<div class='operator available admin'>"
-      html << link_to( "Administrace", datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
+      html << link_to( I18n.t("calendar.actions.administrate"), datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
       html << "</div>"
       html.join.html_safe
     end

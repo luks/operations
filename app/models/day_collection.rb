@@ -15,13 +15,13 @@ class DayCollection < ActiveRecord::Base
                       WHERE  (days.date BETWEEN '#{from}' AND '#{to}')")
   end
 
-  def self.attributes_to_ignore_when_comparing
+  def self.identical_ignore_list
     [:id]
   end
 
   def identical?(other)
-    self.attributes.except(*self.class.attributes_to_ignore_when_comparing.map(&:to_s)) ==
-    other.attributes.except(*self.class.attributes_to_ignore_when_comparing.map(&:to_s))
+    self.attributes.except(*self.class.identical_ignore_list.map(&:to_s)) ==
+    other.attributes.except(*self.class.identical_ignore_list.map(&:to_s))
   end     	        
 
 

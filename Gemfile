@@ -13,7 +13,8 @@ gem "activerecord-import", ">= 0.2.0"
 
 gem 'devise'
 gem 'cancan'
-
+gem 'delayed_job_active_record'
+gem "daemons"
 
 gem 'mail'
 

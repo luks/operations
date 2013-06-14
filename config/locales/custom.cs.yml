@@ -13,3 +13,9 @@ cs:
   users:  
     list: "Seznam uživatelů"
 
+  calendar:
+    actions:
+      delete_day: "Zrušit"
+      reservate_day: "Zarezervovat"
+      confirm_day: "Schválit"
+      administrate: "Administrace"
