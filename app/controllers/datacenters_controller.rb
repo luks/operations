@@ -3,7 +3,7 @@ class DatacentersController < ApplicationController
   # GET /datacenters.json
   load_and_authorize_resource
   def index
-
+    @doubleview = session[:double]
     @datacenters = Datacenter.all
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +14,7 @@ class DatacentersController < ApplicationController
   # GET /datacenters/1
   # GET /datacenters/1.json
   def show
-    @doubleview = false;
+    @doubleview = session[:double]
     if @doubleview
       session[:viewport] = params[:viewport] || 'week'
       @datacenters = Datacenter.all
@@ -23,6 +23,7 @@ class DatacentersController < ApplicationController
     end  
     
     @viewport = session[:viewport]
+
 
     respond_to do |format|
       format.html # show.html.erb
@@ -98,6 +99,15 @@ class DatacentersController < ApplicationController
     end
 
   end
+
+  def set_doubleview
+      
+    session[:doubleview] = params[:double] || nil
+    respond_to do |format|
+      format.html { redirect_to datacenter_url(params) }
+      end
+      
+  end  
   
   def day_reserve
 

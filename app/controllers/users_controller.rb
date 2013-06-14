@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'Uživatel byl úspěšně přidán.' }
+        format.html { redirect_to @user, notice: I18n.t('users.user_being_added') }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         sign_in(@user, :bypass => true)
-        format.html { redirect_to @user, notice: 'Vaše heslo bylo úspěšně změněno. Nyní jste přihlášen(a).' }
+        format.html { redirect_to @user, notice: I18n.t("users.password_changed") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

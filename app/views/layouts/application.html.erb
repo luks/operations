@@ -14,9 +14,10 @@
 		<li><%= link_to "Datacentra", datacenters_path  %></li>
 		<li><%= link_to "Uživatelé", users_path unless cannot? :manage, User %></li>
 
-
+		<li><%= link_to "test",  datacenters_doubled_path(:view =>'double') %></li>  
 		<li><%= link_to "Změnit heslo", edit_user_path(current_user) unless current_user.admin?  %></li>
 		<li><%= link_to I18n.t("login.sign_out"), destroy_user_session_path, :method => :delete  %></li>
+
 		<% end %>
 	</ul>
   </div>	

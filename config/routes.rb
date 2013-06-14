@@ -9,6 +9,9 @@ Operations::Application.routes.draw do
     :constraints => { :id => /\d+/,:viewport => /month|week/ },
     :as => 'datacenters_viewport'
 
+  match 'doubleview/:view' => 'datacenters#set_doubleview',
+    :as => 'datacenters_doubled', :via => :get  
+
   match 'datacenters/:id/reservate/:year/:month/:day/:shift' => 'datacenters#day_reserve',
     :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
     :as => 'datacenters_day_reserve'

@@ -186,9 +186,9 @@ module DatacenterHelper
         td << content_tag(:td, :class => td_class.join(" ")) do
           if (selected_date.month == day.month or options[:viewport] == 'week')
             if(day_shift(s))
-              concat content_tag(:div, day.strftime("%d/%m")+ " Denní ", :class => 'operator date_number')
+              concat content_tag(:div, day.strftime("%d/%m") + " " +  I18n.t("calendar.actions.day") , :class => 'operator date_number')
             else
-              concat content_tag(:div, " Noční", :class => 'date_number')
+              concat content_tag(:div, I18n.t("calendar.actions.night"), :class => 'date_number')
             end
 
             html = []

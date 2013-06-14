@@ -12,6 +12,8 @@ cs:
     forgot_your_password: "Zapomněli jste své heslo?"
   users:  
     list: "Seznam uživatelů"
+    users_being_added: "Uživatel byl úspěšně přidán." 
+    password_changed: "Vaše heslo bylo úspěšně změněno. Nyní jste přihlášen(a)." 
 
   calendar:
     actions:
@@ -19,3 +21,11 @@ cs:
       reservate_day: "Zarezervovat"
       confirm_day: "Schválit"
       administrate: "Administrace"
+      night: "Noční"
+      day: "Denní"
+
+  email:
+    adm_day_destroy: "Administrátor zrušil vaší"
+    adm_day_destroy_title: "Administrátor zrušil vaší směnu"
+  
+
