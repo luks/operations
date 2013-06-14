@@ -113,7 +113,7 @@ class DatacentersController < ApplicationController
     day_collection.save
 
     respond_to do |format|
-      format.html {  redirect_to datacenter_url(params) ,notice: 'Shift was successfuly reservated.'}
+      format.html {  redirect_to datacenter_url(params) }
     end
   end
 
@@ -175,42 +175,43 @@ class DatacentersController < ApplicationController
 
     users = params[:users_id] ? params[:users_id] : []
     day = Day.find(params[:day_id])
-    
-    @updated = []
-    @deleted = [] 
-    @created = []
+    #update
 
     if(params[:day_collections])
-      #DayCollection.transaction do
-
+      DayCollection.transaction do
         params[:day_collections].map do |k,r|
           if(users.include? r[:user_id])
             sql_u = ActiveRecord::Base.send(:sanitize_sql_array,
               ["UPDATE day_collections SET status_id = #{r[:status_id]},shift_id = #{r[:shift_id]},center_id = #{r[:center_id]}
               WHERE day_collections.id = #{r[:id]}"]
             )
-            day_collection = DayCollection.find(r[:id])
-            @updated << day_collection  unless DayCollection.new(r).identical? day_collection
-            #DayCollection.connection.execute(sql_u) 
+            DayCollection.connection.execute(sql_u)
+                Thread.new do
+                  day_collection = DayCollection.find(r[:id])
+                  fake = DayCollection.new(r)
+                  Notifier.admin_update_shift(day_collection).deliver unless fake.identical? day_collection
+                  ActiveRecord::Base.connection.close
+                end
           else
-            to_destroy = DayCollection.find(r[:id])
-       
-            @deleted << to_destroy
-            to_destroy.destroy 
+            sql_d = ActiveRecord::Base.send(:sanitize_sql_array,
+              ["DELETE FROM day_collections WHERE day_collections.id = #{r[:id]}"]
+            )
+                Thread.new do
+                  Notifier.admin_delete_shift(DayCollection.find(r[:id])).deliver
+                  ActiveRecord::Base.connection.close
+                end
+            DayCollection.connection.execute(sql_d)
+
           end
         end
-      #end
-      
-      @deleted.each do |day_collection|
-        Notifier.delay.admin_delete_shift(day_collection)
-      end unless @deleted.nil?
-      @updated.each do |day_collection|
-        Notifier.delay.admin_update_shift(day_collection)
-      end  unless @updated.nil? 
+      end
     end
-    
+
+    #insert
+
     if(params[:day_collections_new])
       DayCollection.transaction do
+        @collections = []
         params[:day_collections_new].map do |r|
           if(users.include? r[:user_id])
             sql = ActiveRecord::Base.send(:sanitize_sql_array,
@@ -219,19 +220,23 @@ class DatacentersController < ApplicationController
              (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]},#{r[:center_id]})"]
             )
             DayCollection.connection.execute(sql)
-            @created << DayCollection.where(:day_id => r[:day_id],:user_id => r[:user_id]).first 
+            @collections << DayCollection.where(:day_id => r[:day_id],:user_id => r[:user_id]).first 
           end
         end
       end
-      @created.each do |day_collection|        
-        Notifier.delay.admin_create_shift(day_collection)
-      end unless @created.nil?
-    end
-
-      respond_to do |format|
-          format.html {  redirect_to datacenter_url(date_to_params(day.date)) }
+        
+        Thread.new do  
+          @collections.each do |collection|        
+            Notifier.admin_create_shift(collection).deliver
+            ActiveRecord::Base.connection.close
+          end
+        end
       end
+
+    respond_to do |format|
+        format.html {  redirect_to datacenter_url(date_to_params(day.date)) }
     end
+  end
 
 
   private
