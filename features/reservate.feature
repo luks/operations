@@ -1,4 +1,3 @@
-@focus
 Feature: User reservate shift
   In order to have simple application
   I want user with role operator easely reservate shift
@@ -21,4 +20,4 @@ Feature: User reservate shift
     Examples:
      | name  | login              | password        | action             |
      | sever | operator@gmail.com | operator1234    | reservate  "sever" |
-     | sever | admin@gmail.com    | admin1234       | confirm  "sever" |
+     | sever | admin@gmail.com    | admin1234       | confirm  "sever"   |
