@@ -14,15 +14,15 @@ Operations::Application.routes.draw do
 
   match 'datacenters/:id/reservate/:year/:month/:day/:shift' => 'datacenters#day_reserve',
     :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :shift => /day|night/ },
-    :as => 'datacenters_day_reserve'
+    :as => 'datacenters_day_reserve', :via => :post
 
   match 'datacenters/:id/confirm/:year/:month/:day/:coll_id' => 'datacenters#day_confirm',
     :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/,  :coll_id => /\d+/ },
-    :as => 'datacenters_day_confirm'
+    :as => 'datacenters_day_confirm', :via => :post
 
   match 'datacenters/:id/destroy/:year/:month/:day/:coll_id' => 'datacenters#day_destroy',
     :constraints => { :id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/,  :coll_id => /\d+/ },
-    :as => 'datacenters_day_destroy'
+    :as => 'datacenters_day_destroy', :via => :post
 
   match 'datacenters/:id/manage_days/:year/:month/:day' => 'datacenters#admin_manage_days',
     :constraints => {:id => /\d+/, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ },

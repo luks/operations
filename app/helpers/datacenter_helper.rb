@@ -237,8 +237,10 @@ module DatacenterHelper
   def link_reservate(options,day,s)
     if can?(:day_reserve, Datacenter) and today_or_younger(day)
       tags = []
-      tags << "<div class='operator available'>"
-      tags <<  link_to( I18n.t("calendar.actions.reservate_day"), datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ))
+      tags << "<div class='operator available' id='#{s+day.to_s}'>"
+      tags <<  link_to(I18n.t("calendar.actions.reservate_day"), 
+        datacenters_day_reserve_path(options[:center_id],day.year ,day.month, day.day, s.to_s ), 
+        :method => :post)
       tags << "</div>"
       tags.join.html_safe
     end
@@ -246,13 +248,17 @@ module DatacenterHelper
 
   def link_destroy(options, col_id, day)
     if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( I18n.t("calendar.actions.delete_day"), datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ))
+      link_to( I18n.t("calendar.actions.delete_day"), 
+        datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ), 
+        :method => :post)
     end
   end
 
   def link_confirm(options, col_id, day)
     if can?(:day_confirm, @day_collections_hash[col_id]) and today_or_younger(day)
-      link_to( I18n.t("calendar.actions.confirm_day"), datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ))
+      link_to( I18n.t("calendar.actions.confirm_day"), 
+        datacenters_day_confirm_path(options[:center_id], day.year ,day.month, day.day, col_id  ), 
+        :method => :post)
     end
   end
 

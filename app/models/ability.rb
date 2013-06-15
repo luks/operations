@@ -12,7 +12,7 @@ class Ability
     elsif user.role == "operator"
       can :read, [Day, DayCollection, Datacenter ]
       can :manage, DayCollection, :user_id => user.id
-      can [:day_reserve, :day_destroy, :set_viewport], Datacenter
+      can [:day_reserve, :day_destroy, :set_viewport, :set_doubleview], Datacenter
       cannot [:admin_manage_days, :admin_process_days, :day_confirm], DayCollection
       can [:edit, :update, :show], User, :id => user.id
 

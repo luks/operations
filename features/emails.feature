@@ -1,4 +1,4 @@
-@focus
+@email
 Feature: Emailing trough application
 	Operator should be emailed when admin confirm his shift
 	Operator should be emailed when admin change his shift
@@ -12,16 +12,34 @@ Feature: Emailing trough application
       | sever |
       | jih   |
 
+    Given day
+      | date  |
+      | 2013-06-15   |
+      | 2013-06-16   |
+
+    Given shift
+      | name  | shift |
+      | denní | day   |
+      | noční | night |  
+      
+     
+    Given day_collections
+      | day_id | user_id | shift_id | status_id | center_id  |
+      |   1    |   2     |    1     |     1     |     1      |
+      |   2    |   2     |    1     |     1     |     2      |
+      |   1    |   1     |    1     |     2     |     1      |
+      |   2    |   1     |    1     |     2     |     2      |
+
     Given users 
       | email                | password     | role      | name       | password_confirmation  |
       | operator@gmail.com   | operator1234 | operator  | operator   | operator1234           |
-      | operator1@gmail.com  | operator1234 | operator1 | operator1  | operator1234           |
-      | operator2@gmail.com  | operator1234 | operator2 | operator2  | operator1234           |
+      | operator1@gmail.com  | operator1234 | operator  | operator1  | operator1234           |
+      | operator2@gmail.com  | operator1234 | operator  | operator2  | operator1234           |
       | admin@gmail.com      | admin1234    | admin     | admin      | admin1234              | 
     Given I am users logged in as "<login>" with password "<password>"  
     When I visit datacenter "<name>"
-    And I do emailing related action 
-    Then "who" should got <action>  
+    And current user so some emailing related action 
+    Then "who" should get <action>  
 
     Examples:
       | name  | login               | password        | action               			| who       |

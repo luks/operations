@@ -112,19 +112,20 @@ class DatacentersController < ApplicationController
   
   def day_reserve
 
-    date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    day = Day.find_by_date(date)
+    @date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    day = Day.find_by_date(@date)
     if day.nil?
-      day = Day.create(:date => date);
+      day = Day.create(:date => @date);
       day.save
     end
     shift_id = params[:shift] == 'day' ? 1 : 2
     center_id = params[:id] 
-    day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id,:center_id => center_id )
-    day_collection.save
+    @day_collection = day.day_collections.new(:user_id => current_user.id,:status_id => 2, :shift_id => shift_id,:center_id => center_id )
+    @day_collection.save
 
     respond_to do |format|
       format.html {  redirect_to datacenter_url(params) }
+      #format.js  
     end
   end
 
@@ -133,10 +134,10 @@ class DatacentersController < ApplicationController
 
     day = day_collection.day
     day_collection.update_attribute(:status_id, 1)
-    Thread.new do
+    #Thread.new do
       Notifier.shift_confirmation(day_collection).deliver
-      ActiveRecord::Base.connection.close
-    end  
+      #ActiveRecord::Base.connection.close
+    #end  
     respond_to do |format|
       format.html {  redirect_to datacenter_url(params) }
     end
