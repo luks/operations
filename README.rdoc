@@ -1,4 +1,4 @@
-Reservation system
+Reservation system simple
 
 Git repos:
   https://github.com/luks/operations.git
@@ -24,7 +24,7 @@ Instalation:
   rails s
 
 Tests:
-
+  !!!For some reason I can't receive emails when testing on mac !!!
   prepare app for testing: 
     rake db:test:clone
   execute tests:
@@ -32,10 +32,11 @@ Tests:
 
 Emailing:
   
-  Dual testing purpose all emails will go to tmp/mails/*
+  !!!IMPORTANT!!!
+  For testing purpose all emails will go to tmp/mails/*, emails are nice formated and decoded.
   Everything is set!!!
 
-  Differents settings:
+  If You want different setting then:
   
   Edit file: 
     config/initializers/setup_mailer.rb

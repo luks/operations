@@ -56,9 +56,9 @@ When(/^current user so some emailing related action$/) do
     ActionMailer::Base.deliveries.size.should eq 0
   end 
   if @current_user.role == 'admin'
-    
+   
     first('a', :text => I18n.t("calendar.actions.confirm_day")).click 
-    #first('a', :text => I18n.t("calendar.actions.delete_day")).click  
+    first('a', :text => I18n.t("calendar.actions.delete_day")).click  
     @email = ActionMailer::Base.deliveries.last
     @email.from.should include 'operation@application.com'
     ActionMailer::Base.deliveries.size.should eq 1
@@ -68,19 +68,28 @@ When(/^current user so some emailing related action$/) do
 end
 
 Then(/^should get email_reservate$/) do
-  pending # express the regexp above with the code you wish you had
+  if @current_user.admin?
+    first('a', :text => I18n.t("calendar.actions.confirm_day")).click 
+    @email = ActionMailer::Base.deliveries.last
+    @email.from.should include 'operation@application.com'
+    ActionMailer::Base.deliveries.size.should eq 1
+  end 
 end
 
 Then(/^should get email_cancel$/) do
-  pending # express the regexp above with the code you wish you had
+  if @current_user.admin?
+    first('a', :text => I18n.t("calendar.actions.delete_day")).click  
+    @email = ActionMailer::Base.deliveries.last
+    @email.from.should include 'operation@application.com'
+  end  
 end
 
 Then(/^should get email_cancel_confirmed$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
 
 Then(/^should get email_confirm_reservate$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
 
 
