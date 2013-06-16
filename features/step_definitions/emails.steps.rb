@@ -70,6 +70,7 @@ end
 Then(/^should get email_reservate$/) do
   if @current_user.admin?
     first('a', :text => I18n.t("calendar.actions.confirm_day")).click 
+    first('a', :text => I18n.t("calendar.actions.delete_day")).click  
     @email = ActionMailer::Base.deliveries.last
     @email.from.should include 'operation@application.com'
     ActionMailer::Base.deliveries.size.should eq 1
