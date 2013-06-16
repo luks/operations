@@ -196,37 +196,45 @@ class DatacentersController < ApplicationController
       DayCollection.transaction do
         params[:day_collections].map do |k,r|
           if(users.include? r[:user_id])
-            DayCollection.update_fast(r)
+            sql_u = ActiveRecord::Base.send(:sanitize_sql_array,
+              ["UPDATE day_collections SET status_id = #{r[:status_id]},shift_id = #{r[:shift_id]},center_id = #{r[:center_id]}
+              WHERE day_collections.id = #{r[:id]}"]
+            )
+            DayCollection.connection.execute(sql_u)
                 Thread.new do
                   day_collection = DayCollection.find(r[:id])
                   fake = DayCollection.new(r)
                   Notifier.admin_update_shift(day_collection).deliver unless fake.identical? day_collection
                   ActiveRecord::Base.connection.close
                 end
-                #testing env
-                Notifier.admin_update_shift(day_collection).deliver if is_test_env
-
           else
-              DayCollection.delete_fast(r)
+            sql_d = ActiveRecord::Base.send(:sanitize_sql_array,
+              ["DELETE FROM day_collections WHERE day_collections.id = #{r[:id]}"]
+            )
                 Thread.new do
                   Notifier.admin_delete_shift(DayCollection.find(r[:id])).deliver
                   ActiveRecord::Base.connection.close
                 end
-                #testing env
-                if is_test_env
-                  Notifier.admin_delete_shift(DayCollection.find(r[:id])).deliver 
-                end  
+            DayCollection.connection.execute(sql_d)
+
           end
         end
       end
     end
+
+    #insert
 
     if(params[:day_collections_new])
       DayCollection.transaction do
         @collections = []
         params[:day_collections_new].map do |r|
           if(users.include? r[:user_id])
-            DayCollection.create_fast(r)  
+            sql = ActiveRecord::Base.send(:sanitize_sql_array,
+             ["INSERT INTO day_collections
+             (day_id, shift_id, status_id, user_id, center_id) VALUES
+             (#{r[:day_id]}, #{r[:shift_id]}, #{r[:status_id]},#{r[:user_id]},#{r[:center_id]})"]
+            )
+            DayCollection.connection.execute(sql)
             @collections << DayCollection.where(:day_id => r[:day_id],:user_id => r[:user_id]).first 
           end
         end
@@ -238,12 +246,6 @@ class DatacentersController < ApplicationController
             ActiveRecord::Base.connection.close
           end
         end
-        #testing env
-        if is_test_env
-          @collections.each do |collection|        
-            Notifier.admin_create_shift(collection).deliver
-          end
-        end  
       end
 
     respond_to do |format|
