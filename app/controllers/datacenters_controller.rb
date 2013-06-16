@@ -200,22 +200,21 @@ class DatacentersController < ApplicationController
               ["UPDATE day_collections SET status_id = #{r[:status_id]},shift_id = #{r[:shift_id]},center_id = #{r[:center_id]}
               WHERE day_collections.id = #{r[:id]}"]
             )
-            
-                #Thread.new do
+                Thread.new do
                   day_collection = DayCollection.find(r[:id])
                   fake = DayCollection.new(r)
                   Notifier.admin_update_shift(day_collection).deliver unless fake.identical? day_collection
-                  #ActiveRecord::Base.connection.close
-                #end
+                  ActiveRecord::Base.connection.close
+                end
                 DayCollection.connection.execute(sql_u)
           else
             sql_d = ActiveRecord::Base.send(:sanitize_sql_array,
               ["DELETE FROM day_collections WHERE day_collections.id = #{r[:id]}"]
             )
-                #Thread.new do
+                Thread.new do
                   Notifier.admin_delete_shift(DayCollection.find(r[:id])).deliver
-                  #ActiveRecord::Base.connection.close
-                #end
+                  ActiveRecord::Base.connection.close
+                end
             DayCollection.connection.execute(sql_d)
 
           end
@@ -241,12 +240,12 @@ class DatacentersController < ApplicationController
         end
       end
         
-        #Thread.new do  
+        Thread.new do  
           @collections.each do |collection|        
             Notifier.admin_create_shift(collection).deliver
-            #ActiveRecord::Base.connection.close
+            ActiveRecord::Base.connection.close
           end
-        #end
+        end
       end
     
     respond_to do |format|
