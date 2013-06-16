@@ -1,25 +1,29 @@
 Reservation system
 
 Git repos:
-  lukapiske@latoto.cz:/home/lukapiske/git-repos/operations.git
+  https://github.com/luks/operations.git
 
 Version:
   
   Rails 3.2.13
 
 Tested on:
-
-  ruby 1.9.3 - Os, Linux: Ubuntu, Debian wheezy
-  ruby 2.0.0 - Linux: Ubuntu, Debian wheezy
-
-Instalation;
   
+  ruby virtual machine: 
+    rvm: https://rvm.io/rvm/install
+    ruby 1.9.3 - Os, Linux: Ubuntu, Debian wheezy
+    ruby 2.0.0 - Linux: Ubuntu, Debian wheezy
+
+Instalation:
+  
+  git clone https://github.com/luks/operations.git operations
+  cd operations
   bundle install
   rake db:migrate
   rake db:seed
   rails s
 
-Test:
+Tests:
 
   prepare app for testing: 
     rake db:test:clone
@@ -30,14 +34,15 @@ Emailing:
 
   Edit file: 
     config/initializers/setup_mailer.rb
-  Interceptor:
+  Edit interceptors:
     lib/development_mail_interceptor.rb 
-    - for testing purpose all email will be send to admin and real reciever will be writen in subject.
+    - for testing purpose all email will be send to admin, real reciever will be writen in subject.
     <code>
         message.subject = "[#{message.to}] #{message.subject}"  
-        message.to = "lukapiske@yahoo.com"
+        message.to = "jamie.piske@gmail.com"
     </code> 
-  Emails are sended in Thread sometimes took 5 - 10 min. to get it.          
+  Emails are sended in Thread sometimes took 5 - 10 min. to get them.  
+  I created fake gmail account for testing - jamie.piske@gmail.com / jamie1234         
 
 
 
