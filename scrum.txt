@@ -1,0 +1,41 @@
+
+
+Reservation system for seznam
+
+Story: In order to have multi role application as a programmer I need Implement authentification and authorization 
+	Feature: Implement and customise opensource gems device and cancan
+		Task: Customise Ability class from cancan
+	Feature: In oreder to manage users I need to implement functionality to manage users
+		Task: Funcionality user can manage own password
+		Task: Admin can manage user
+
+
+Story: In order to have calendar with day/night shifts on it as a programmer have to create calendar functionality
+	Feature: In order to have calendar as a programmer I need database
+		Task: Database analyse 
+		Task: Database modeling 
+	Feature: On existing database create event calendar
+		Task: Calendar programing
+		Task: Various links for various roles
+		Task: Optimalisation
+		Task: Translation
+
+
+Story: As a administrator I should be able to manage all shifts on calendar and add new easily and quickly
+	Feature: Build administrator interface for multyple managing users's shifts
+		Task: Create interface 		
+		Task: Implement to calendar
+
+Story: As user and administrator I have to be notified when following action are made
+Admin create shift   - inolved user  is notified
+Admin confirm shift  - inolved user  is notified
+Admin destroy shift  - inolved user  is notified
+User destroy confirmed shift - admin is notified
+
+	Feature: Implement emailing functionality  
+		Task: make sending email stable and fast
+ 
+
+
+
+ 

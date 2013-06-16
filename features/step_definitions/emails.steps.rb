@@ -67,26 +67,22 @@ When(/^current user so some emailing related action$/) do
 
 end
 
-Then(/^"(.*?)" should get email_reservate$/) do |arg1|
-  if@current_user.role == 'operator'
-    #ActionMailer::Base.deliveries.size.should eq 0
-  end 
+Then(/^should get email_reservate$/) do
+  pending # express the regexp above with the code you wish you had
 end
 
-Then(/^"(.*?)" should get email_cancel$/) do |arg1|
-   #@email = ActionMailer::Base.deliveries
-  #puts @email
+Then(/^should get email_cancel$/) do
+  pending # express the regexp above with the code you wish you had
 end
 
-Then(/^"(.*?)" should get email_cancel_confirmed$/) do |arg1|
-    #@email = ActionMailer::Base.deliveries
-  #puts @email
+Then(/^should get email_cancel_confirmed$/) do
+  pending # express the regexp above with the code you wish you had
 end
 
-Then(/^"(.*?)" should get email_confirm_reservate$/) do |arg1|
-    #@email = ActionMailer::Base.deliveries
-  #puts @email
+Then(/^should get email_confirm_reservate$/) do
+  pending # express the regexp above with the code you wish you had
 end
+
 
 
 
