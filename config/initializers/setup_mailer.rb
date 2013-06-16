@@ -22,8 +22,8 @@ ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.delivery_method = :file
 ActionMailer::Base.file_settings = { :location => Rails.root.join('tmp/mails') }
 
-
 ActionMailer::Base.default_url_options[:host] = "localhost:3000"
+
 
 # Uncomment this in development mode if You are using :smtp settings for email 
 #ActionMailer::Base.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?

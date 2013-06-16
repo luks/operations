@@ -38,4 +38,8 @@ class DayCollection < ActiveRecord::Base
     self.attributes.except(*self.class.identical_ignore_list.map(&:to_s)) ==
     other.attributes.except(*self.class.identical_ignore_list.map(&:to_s))
   end
+
+  def diference(other)
+    self.attributes.diff(other.attributes)   
+  end  
 end

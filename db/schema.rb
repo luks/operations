@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604130541) do
+ActiveRecord::Schema.define(:version => 20130616174000) do
 
   create_table "datacenters", :force => true do |t|
     t.string   "name"
@@ -27,11 +27,19 @@ ActiveRecord::Schema.define(:version => 20130604130541) do
     t.integer "center_id"
   end
 
+  add_index "day_collections", ["center_id"], :name => "index_day_collections_on_center_id"
+  add_index "day_collections", ["day_id"], :name => "index_day_collections_on_day_id"
+  add_index "day_collections", ["shift_id"], :name => "index_day_collections_on_shift_id"
+  add_index "day_collections", ["status_id"], :name => "index_day_collections_on_status_id"
+  add_index "day_collections", ["user_id"], :name => "index_day_collections_on_user_id"
+
   create_table "days", :force => true do |t|
     t.date     "date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "days", ["date"], :name => "index_days_on_date"
 
   create_table "shifts", :force => true do |t|
     t.string   "name"

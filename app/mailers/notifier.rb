@@ -32,13 +32,20 @@ class Notifier < ActionMailer::Base
 
   end	
 
-  def admin_update_shift(day_collection)
-	
-  		@title = "Administrátor zmenil vaší"
-			@day_collection = day_collection
-			subject = "Administrátor zmenil vaší směnu"
-			to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
-			mail(:to => to,:subject => subject) 
+  def admin_update_shift(day_collection, fake)
+      
+  		diff = fake.diference(day_collection)
+
+  		if diff.has_key?("status_id") and diff['status_id'] == 1
+  			self.shift_confirmation(day_collection)
+  		else
+
+  			@title = "Administrátor zmenil vaší"
+				@day_collection = day_collection
+				subject = "Administrátor zmenil vaší směnu"
+				to =  "#{day_collection.user.name} <#{day_collection.user.email}>" 
+				mail(:to => to,:subject => subject) 
+			end
 
   end
   
