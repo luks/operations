@@ -31,7 +31,12 @@ Tests:
     cucumbar
 
 Emailing:
+  
+  Dual testing purpose all emails will go to tmp/mails/*
+  Everything is set!!!
 
+  Different settings:
+  
   Edit file: 
     config/initializers/setup_mailer.rb
   Edit interceptors:
