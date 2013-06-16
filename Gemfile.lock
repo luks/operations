@@ -76,6 +76,7 @@ GEM
       multi_json (~> 1.3)
     hike (1.2.2)
     i18n (0.6.1)
+    iconv (1.0.3)
     journey (1.0.4)
     jquery-rails (3.0.0)
       railties (>= 3.0, < 5.0)
@@ -167,6 +168,7 @@ DEPENDENCIES
   devise
   execjs
   factory_girl_rails
+  iconv
   jquery-rails
   mail
   rails (= 3.2.13)

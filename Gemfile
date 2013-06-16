@@ -14,6 +14,8 @@ gem "activerecord-import", ">= 0.2.0"
 gem 'devise'
 gem 'cancan'
 
+gem 'iconv'
+
 
 gem 'mail'
 
