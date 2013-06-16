@@ -212,8 +212,6 @@ module DatacenterHelper
             end.join.html_safe
             html << link_reservate(options,day, s) unless user_ocupied
 
-            
-
             concat html.join.html_safe
           end
 
@@ -277,8 +275,12 @@ module DatacenterHelper
   end
   
   def today_or_younger(date)
-    Date.today <= date
-  end 
+    if Date.today == date
+      DateTime.now < DateTime.strptime('20:00', '%H:%M')
+    else
+      Date.today <= date
+    end
+  end   
     
 end
 
