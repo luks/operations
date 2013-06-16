@@ -8,8 +8,10 @@ Given(/^datacenter$/) do |table|
 end
 
 Given(/^day$/) do |table|
-   table.hashes.each do |hash|
-    hash[:date] = Date.today
+
+   table.hashes.each_with_index do |hash, index|
+    # h = { :date => Date.today + index }
+    # hash =  hash.update(h)
     FactoryGirl.create(:day, hash)
   end
 end
@@ -44,19 +46,22 @@ end
 When(/^I visit datacenter "(.*?)"$/) do |name|
   @datacenter = Datacenter.find_by_name(name)
   visit datacenter_path(@datacenter)
+  
 end
 
 
 When(/^current user so some emailing related action$/) do
   if@current_user.role == 'operator'
     first('a', :text => I18n.t("calendar.actions.reservate_day")).click 
-    #ActionMailer::Base.deliveries.size.should eq 0
+    ActionMailer::Base.deliveries.size.should eq 0
   end 
   if @current_user.role == 'admin'
+    
     first('a', :text => I18n.t("calendar.actions.confirm_day")).click 
-    first('a', :text => I18n.t("calendar.actions.delete_day")).click  
-    #@email = ActionMailer::Base.deliveries.last
-    #@email.to.should include 'operator@gmail.com'
+    #first('a', :text => I18n.t("calendar.actions.delete_day")).click  
+    @email = ActionMailer::Base.deliveries.last
+    @email.from.should include 'operation@application.com'
+    ActionMailer::Base.deliveries.size.should eq 1
     #@email.subject.should include(arg1)
   end  
 

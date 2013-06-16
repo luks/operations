@@ -35,7 +35,7 @@ Emailing:
   Dual testing purpose all emails will go to tmp/mails/*
   Everything is set!!!
 
-  Different settings:
+  Differents settings:
   
   Edit file: 
     config/initializers/setup_mailer.rb
@@ -46,7 +46,7 @@ Emailing:
         message.subject = "[#{message.to}] #{message.subject}"  
         message.to = "jamie.piske@gmail.com"
     </code> 
-  Emails are sended in Thread sometimes took 5 - 10 min. to get them.  
+  Emails are sended in Thread sometimes took 5 - 10 min. to get them all.  
   I created fake gmail account for testing - jamie.piske@gmail.com / jamie1234         
 
 

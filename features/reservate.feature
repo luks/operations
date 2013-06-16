@@ -7,7 +7,7 @@ Feature: User reservate shift
     Given the following datacentrum
     	| name  |
       | sever |
-      | jih   |
+      | sever |
 
     Given the following users 
       | email               | password     | role     | name      | password_confirmation  |

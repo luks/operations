@@ -10,12 +10,14 @@ Feature: Emailing trough application
     Given datacenter
     	| name  |
       | sever |
-      | jih   |
+
 
     Given day
       | date  |
       | 2013-06-15   |
-  
+      | 2013-06-15   |
+      | 2013-06-18   |
+      | 2013-06-20   |
 
     Given shift
       | name  | shift |
@@ -25,10 +27,14 @@ Feature: Emailing trough application
      
     Given day_collections
       | day_id | user_id | shift_id | status_id | center_id  |
-      |   1    |   1     |    1     |     1     |     1      |
-      |   1    |   2     |    1     |     1     |     1      |
-      |   1    |   3     |    1     |     2     |     1      |
-      |   1    |   4     |    1     |     2     |     1      |
+      |   3    |   1     |    1     |     1     |     1      |
+      |   3    |   2     |    1     |     1     |     1      |
+      |   3    |   3     |    1     |     2     |     1      |
+      |   3    |   4     |    1     |     2     |     1      |
+      |   4    |   1     |    1     |     1     |     1      |
+      |   4    |   2     |    1     |     1     |     1      |
+      |   4    |   3     |    1     |     2     |     1      |
+      |   4    |   4     |    1     |     2     |     1      |
 
 
     Given users 
