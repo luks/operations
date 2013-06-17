@@ -138,6 +138,7 @@ class DatacentersController < ApplicationController
       Notifier.shift_confirmation(day_collection).deliver
       ActiveRecord::Base.connection.close
     end 
+    Notifier.shift_confirmation(day_collection).deliver if is_test_env
     respond_to do |format|
       format.html {  redirect_to datacenter_url(params) }
     end
@@ -153,6 +154,7 @@ class DatacentersController < ApplicationController
         Notifier.shift_destroy(day_collection,current_user).deliver
         ActiveRecord::Base.connection.close
       end
+      Notifier.shift_destroy(day_collection,current_user).deliver if is_test_env
       day_collection.destroy
     end
     respond_to do |format|

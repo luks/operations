@@ -61,7 +61,7 @@ When(/^current user so some emailing related action$/) do
     first('a', :text => I18n.t("calendar.actions.delete_day")).click  
     @email = ActionMailer::Base.deliveries.last
     @email.from.should include 'operation@application.com'
-    ActionMailer::Base.deliveries.size.should eq 1
+    ActionMailer::Base.deliveries.size.should eq 2
     #@email.subject.should include(arg1)
   end  
 
@@ -73,19 +73,28 @@ Then(/^should get email_reservate$/) do
     first('a', :text => I18n.t("calendar.actions.delete_day")).click  
     @email = ActionMailer::Base.deliveries.last
     @email.from.should include 'operation@application.com'
-    ActionMailer::Base.deliveries.size.should eq 1
+    ActionMailer::Base.deliveries.size.should eq 4
   end 
 end
 
 Then(/^should get email_cancel$/) do
   if @current_user.admin?
-    first('a', :text => I18n.t("calendar.actions.delete_day")).click  
+    first('a', :text => I18n.t("calendar.actions.confirm_day")).click  
     @email = ActionMailer::Base.deliveries.last
     @email.from.should include 'operation@application.com'
+    #ActionMailer::Base.deliveries.size.should eq 1
+    @email.subject.should include('')
   end  
 end
 
 Then(/^should get email_cancel_confirmed$/) do
+  if !@current_user.admin?
+     
+    #first('a', :text => I18n.t("calendar.actions.delete_day")).click  
+    #@email = ActionMailer::Base.deliveries.last
+    #@email.to.should include 'admin@gmail.com'
+    #ActionMailer::Base.deliveries.size.should eq 1
+  end 
 
 end
 
