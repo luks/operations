@@ -56,7 +56,7 @@ When(/^current user so some emailing related action$/) do
     ActionMailer::Base.deliveries.size.should eq 0
   end 
   if @current_user.role == 'admin'
-   
+    
     first('a', :text => I18n.t("calendar.actions.confirm_day")).click 
     first('a', :text => I18n.t("calendar.actions.delete_day")).click  
     @email = ActionMailer::Base.deliveries.last
