@@ -1,6 +1,6 @@
 
 
-Reservation system for seznam
+Reservation system 
 
 Story: In order to have multi role application as a programmer I need Implement authentification and authorization 
 	Feature: Implement and customise opensource gems device and cancan
