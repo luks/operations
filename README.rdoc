@@ -11,8 +11,8 @@ Tested on:
   
   ruby virtual machine: 
     rvm: https://rvm.io/rvm/install
-    ruby 1.9.3 - Os, Linux: Ubuntu, Debian wheezy
-    ruby 2.0.0 - Linux: Ubuntu, Debian wheezy
+    ruby 2.0.0p195 (2013-05-14 revision 40734) [x86_64-linux]
+    Linux: Ubuntu, Debian wheezy, OS
 
 Instalation:
   
@@ -26,13 +26,15 @@ Instalation:
 Tests:
   prepare app for testing: 
     rake db:test:clone
+    rake db:test:prepare
   execute tests:
     cucumbar
+  !!! Need to set date in emails.spec !!!  
 
 Emailing:
   
   !!!IMPORTANT!!!
-  For testing purpose all emails will go to tmp/mails/*, emails are nice formated and decoded.
+  For developing purposes all emails will go to "app_root"/tmp/mails/*, emails are nice formated and decoded.
   Everything is set!!!
 
   If You want different setting then:
@@ -46,6 +48,7 @@ Emailing:
         message.subject = "[#{message.to}] #{message.subject}"  
         message.to = "jamie.piske@gmail.com"
     </code> 
+    
   Emails are sended in Thread sometimes took 5 - 10 min. to get them all.  
   I created fake gmail account for testing - jamie.piske@gmail.com / jamie1234 
 
