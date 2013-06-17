@@ -24,7 +24,6 @@ Instalation:
   rails s
 
 Tests:
-  !!!For some reason I can't receive emails when testing on mac !!!
   prepare app for testing: 
     rake db:test:clone
   execute tests:
@@ -48,7 +47,8 @@ Emailing:
         message.to = "jamie.piske@gmail.com"
     </code> 
   Emails are sended in Thread sometimes took 5 - 10 min. to get them all.  
-  I created fake gmail account for testing - jamie.piske@gmail.com / jamie1234         
+  I created fake gmail account for testing - jamie.piske@gmail.com / jamie1234 
+
 
 
 
