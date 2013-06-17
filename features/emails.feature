@@ -13,10 +13,10 @@ Feature: As user and administrator I have to be notified when following action a
   
     Given day
       | date  |
-      | 2013-06-20   |
-      | 2013-06-21   |
-      | 2013-06-22   |
-      | 2013-06-23   |
+      | 2013-06-24   |
+      | 2013-06-25   |
+      | 2013-06-26   |
+      | 2013-06-27   |
 
     Given shift
       | name  | shift |
@@ -25,13 +25,13 @@ Feature: As user and administrator I have to be notified when following action a
       
     Given day_collections
       | day_id | user_id | shift_id | status_id | center_id  |
-      |   1    |   1     |    1     |     2     |     1      |
-      |   1    |   2     |    2     |     2     |     1      |
-      |   2    |   3     |    1     |     2     |     1      |
+      |   1    |   2     |    1     |     1     |     1      |
+      |   1    |   3     |    2     |     2     |     1      |
+      |   2    |   3     |    1     |     1     |     1      |
       |   2    |   4     |    1     |     2     |     1      |
-      |   3    |   1     |    1     |     2     |     1      |
-      |   3    |   2     |    1     |     1     |     1      |
-      |   4    |   3     |    1     |     2     |     1      |
+      |   3    |   1     |    1     |     1     |     1      |
+      |   3    |   2     |    1     |     2     |     1      |
+      |   4    |   3     |    1     |     1     |     1      |
       |   4    |   4     |    1     |     2     |     1      |
 
 
