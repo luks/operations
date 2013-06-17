@@ -233,7 +233,7 @@ module DatacenterHelper
   end
   
   def link_reservate(options,day,s)
-    if can?(:day_reserve, Datacenter) and today_or_younger(day,s)
+    if can?(:day_reserve, Datacenter) and today_or_younger(day)
       tags = []
       tags << "<div class='operator available' id='#{s+day.to_s}'>"
       tags <<  link_to(I18n.t("calendar.actions.reservate_day"), 
@@ -245,7 +245,7 @@ module DatacenterHelper
   end
 
   def link_destroy(options, col_id, day)
-    if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day,@day_collections_hash[col_id].shift)
+    if can?(:destroy, @day_collections_hash[col_id]) and today_or_younger(day)
       link_to( I18n.t("calendar.actions.delete_day"), 
         datacenters_day_destroy_path(options[:center_id], day.year ,day.month, day.day, col_id ), 
         :method => :post)
@@ -265,7 +265,7 @@ module DatacenterHelper
   end
 
   def link_admin_reserv(options,day)
-    if can?(:admin_manage_days, Datacenter) and today_or_younger(day,nil)
+    if can?(:admin_manage_days, Datacenter) and today_or_younger(day)
       html =[]
       html << "<div class='operator available admin'>"
       html << link_to( I18n.t("calendar.actions.administrate"), datacenters_admin_manage_days_path(options[:center_id], day.year ,day.month, day.day ))
@@ -274,18 +274,8 @@ module DatacenterHelper
     end
   end
   
-  def today_or_younger(date,s)
-    if Date.today == date 
-      if s == 'day'
-        DateTime.now > DateTime.strptime('08:00', '%H:%M')
-      elsif s == 'night' 
-        DateTime.now > DateTime.strptime('20:00', '%H:%M')    
-      else
-        Date.today <= date
-      end  
-    else  
-      Date.today <= date
-    end
+  def today_or_younger(date)
+    Date.today <= date
   end   
     
 end
