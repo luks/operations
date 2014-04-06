@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Operations::Application.load_tasks
+Tripadviser::Application.load_tasks

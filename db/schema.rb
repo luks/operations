@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616174000) do
+ActiveRecord::Schema.define(:version => 20140406132120) do
+
+  create_table "accessories", :force => true do |t|
+    t.string   "key"
+    t.text     "value"
+    t.integer  "item_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "datacenters", :force => true do |t|
     t.string   "name"
@@ -40,6 +48,43 @@ ActiveRecord::Schema.define(:version => 20130616174000) do
   end
 
   add_index "days", ["date"], :name => "index_days_on_date"
+
+  create_table "images", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "item_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "image"
+  end
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.string   "short_desc"
+    t.text     "desc"
+    t.integer  "location_id"
+    t.integer  "media_id"
+    t.integer  "type_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "image"
+    t.string   "title"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "ancestry"
+  end
+
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "shifts", :force => true do |t|
     t.string   "name"

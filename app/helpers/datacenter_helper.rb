@@ -59,7 +59,7 @@ module DatacenterHelper
 
     tags << month_header(selected_date, options)
 
-    content_tag(:table, :class => "calendar") do
+    content_tag(:table, :class => "table table-bordered") do
       tags << table_header(options)
       tags << content_tag(:tbody) do
         tr = []

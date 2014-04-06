@@ -1,4 +1,19 @@
-Operations::Application.routes.draw do
+Tripadviser::Application.routes.draw do
+
+  resources :accessories
+
+
+  resources :images
+
+
+  resources :items
+
+
+  resources :locations
+
+
+  resources :posts
+
 
   resources :datacenters
 
