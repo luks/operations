@@ -11,12 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140406132120) do
+ActiveRecord::Schema.define(:version => 20140408193048) do
 
   create_table "accessories", :force => true do |t|
     t.string   "key"
     t.text     "value"
     t.integer  "item_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "type"
+    t.string   "label"
+  end
+
+  create_table "bookings", :force => true do |t|
+    t.datetime "from"
+    t.datetime "till"
+    t.integer  "item_id"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -49,6 +60,14 @@ ActiveRecord::Schema.define(:version => 20140406132120) do
 
   add_index "days", ["date"], :name => "index_days_on_date"
 
+  create_table "equipment", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "item_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "images", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -69,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20140406132120) do
     t.datetime "updated_at",  :null => false
     t.string   "image"
     t.string   "title"
+    t.string   "ancestry"
+    t.integer  "capacity"
   end
 
   create_table "locations", :force => true do |t|

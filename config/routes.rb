@@ -1,5 +1,11 @@
 Tripadviser::Application.routes.draw do
 
+  resources :equipment
+
+
+  resources :bookings
+
+
   resources :accessories
 
 

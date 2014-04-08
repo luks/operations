@@ -59,7 +59,7 @@ class DayCollection < ActiveRecord::Base
           end
         end
       end  
-        Thread.new do  
+        Thread.new do
           @collections.each do |collection|        
             Notifier.admin_create_shift(collection).deliver
             ActiveRecord::Base.connection.close

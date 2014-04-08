@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Key:</b>
+  <%= @equipment.key %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @equipment.value %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%= @equipment.item_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_equipment_path(@equipment) %> |
+<%= link_to 'Back', equipment_index_path %>

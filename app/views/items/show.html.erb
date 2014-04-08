@@ -1,0 +1,127 @@
+<ol class="breadcrumb">
+  <% @item.location.ancestors.each do |ancestor| %>
+  <li><a href="#"><%= ancestor.name %></a></li>
+  <% end %>
+  <li><a href="#"><%= @item.location.name %></a></li>
+  <% if @item.parent %>
+    <% @item.ancestors.each do |ancestor| %>
+    <li><a href="#"><%= ancestor.name %></a></li>
+    <% end %>
+    <li class="active"><%= @item.name %></li>
+  <% end %>
+</ol>
+
+
+<div class="page-header">
+  <h3><%= link_to @item.parent.name , @item.parent if @item.parent %><%= @item.name %> <small><%= @item.title %></small></h3>
+</div>
+  <p id="notice"><%= notice %></p>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="row">
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail" ><%= image_tag(@item.image.thumb) if @item.image? %></a>
+            </div>
+            <br />
+              <% @item.images.each_slice(2) do |slice| %>
+                <ul class="thumbnails ">
+                <% slice.each do |img| %>
+                  <li class="span5 ">
+                    <a href="#" class="thumbnail" ><%= image_tag(img.image.thumb, :class => '') if img %></a>
+                  </li>
+                <% end %>
+                </ul>
+              <% end %>
+          </div>
+        </div><!--/span-->
+        <div class="span6 ">
+          <h5><%= @item.short_desc %></h5>
+            <%= @item.desc %>
+            <br /><br />
+
+
+            <% if !@item.children.empty? %>
+              <table class="table">
+              <% @item.children.each do |child| %>
+                <tr>
+                  <td><%= link_to child.name, child %></td>
+                  <td><%= child.short_desc %></td>
+                  <td><a href="#" class="" ><%= image_tag(child.image.small_thumb) if child.image? %></a></td>
+                <tr>
+              <% end %>
+              </table>
+            <% end %> 
+
+            <% if @item.parent %>
+              <table class="table">
+              
+                <tr>
+                  <td><%= link_to @item.parent.name, @item.parent %></td>
+                  <td><%= @item.parent.short_desc %></td>
+                  <td><a href="#" class="" ><%= image_tag(@item.parent.image.small_thumb) if @item.parent.image? %></a></td>
+                <tr>
+              
+              </table>
+            <% end %>   
+
+            <% if !@item.equipments.empty? %>
+              <table class="table">
+              <% @item.equipments.each do |equipment| %>
+                <tr>
+                  <td><%= equipment.key %></td>
+                  <td><%=equipment.value %></td>
+                <tr>
+              <% end %>
+              </table>
+            <% end %>
+
+
+            <% if !@item.accessories.empty? %>
+              <table class="table">
+              <% @item.accessories.each do |accessory| %>
+                <tr>
+                  <td><span class="label label-<%=accessory.label%>"><%= accessory.key %></span></td>
+                  <td><span class="text-<%=accessory.label%>"><%=accessory.value %></span></td>
+                <tr>
+              <% end %>
+              </table>
+            <% end %>
+        </div>
+        <div class="span3 ">
+
+            <%#=  calendar  @item, {:viewport => "month"}  %>
+
+            <div class="alert alert-notice">
+
+              <b>Capacity:&nbsp;<%= @item.capacity %></b>
+
+          </div>
+
+          <% if !@item.bookings.empty? %>
+          <div class="alert alert-error">
+            <h3>Booked</h3>
+              <table class="table">
+                <tr>
+                  <th>From</th>
+                  <th>Till</th>
+                </tr>
+              <% @item.bookings.each do |booked| %>
+                <tr>
+                  <td><%=booked.from.strftime('%d/%m/%Y') %></td>
+                  <td><%= booked.till.strftime('%d/%m/%Y') %></td>
+                <tr>
+              <% end %>
+              </table>
+            </div>
+          <% end %>  
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- /container -->
+    
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>
